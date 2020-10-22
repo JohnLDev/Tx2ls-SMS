@@ -27,6 +27,17 @@ export class CreateUsers1601146960018 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'is_Verify',
+            type: 'boolean',
+            default: false,
+          },
+          {
+            name: 'verify_Key',
+            type: 'uuid',
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

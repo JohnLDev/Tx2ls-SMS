@@ -1,24 +1,14 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
-import JsBarcode from 'jsbarcode'
+import Routes from './routes'
+import GlobalStyle from './styles/global'
 
-function Id(): string {
-  // Math.random should be unique because of its seeding algorithm.
-  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-  // after the decimal.
-  return Math.random().toString(36).substr(2, 9)
-}
-
-const App: React.FC = () => {
-  window.setTimeout(function () {
-    JsBarcode('#barcode', Id())
-  }, 0)
+const Dashboard: React.FC = () => {
   return (
     <>
-      <h1>hendriko barcode</h1>
-      <img id='barcode' alt='barcode' />
+      <Routes />
+      <GlobalStyle />
     </>
   )
 }
-
-export default App
+export default Dashboard
