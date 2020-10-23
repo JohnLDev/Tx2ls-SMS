@@ -7,7 +7,7 @@ import Header from '../../components/Header/Header'
 import Vendas from '../../assets/sales.png'
 import Inventário from '../../assets/inv.png'
 import BarCode from '../../assets/barcode.png'
-import NewUser from '../../assets/newuser.png'
+import NewUser from '../../assets/newuser3.png'
 import History from '../../assets/history.svg'
 
 const Dashboard: React.FC = () => {
@@ -29,7 +29,7 @@ const Dashboard: React.FC = () => {
             </Link>
           </Block>
           <Block>
-            <Link to='/'>
+            <Link to='/barcode'>
               <MiniHeader>Gerar código de barras</MiniHeader>
               <img src={BarCode} alt='Código de barras' />
             </Link>

@@ -3,7 +3,6 @@ import React from 'react'
 
 import {
   Border,
-  Input,
   Page,
   InventoryContainer,
   Storage,
@@ -11,16 +10,16 @@ import {
   SellButton,
 } from './styles'
 import Header from '../../components/Header/Header'
-import { FiX } from 'react-icons/fi'
+import { FiChevronsRight } from 'react-icons/fi'
 
-const Inventory: React.FC = () => {
+const Barcode: React.FC = () => {
   return (
     <Border>
       <Page>
         <Header />
         <InventoryContainer>
           <Storage>
-            <h2>Estoque</h2>
+            <h2>Lista de Produtos</h2>
 
             <div className='lastsell'>
               <table className='table'>
@@ -37,7 +36,7 @@ const Inventory: React.FC = () => {
                     <td>3</td>
                     <td>14,99</td>
                     <button>
-                      <FiX size={15} color='#bf4040' />
+                      <FiChevronsRight size={15} color='#4682B4' />
                     </button>
                   </tr>
                   <tr>
@@ -46,7 +45,7 @@ const Inventory: React.FC = () => {
                     <td>400</td>
                     <td>18,00</td>
                     <button>
-                      <FiX size={15} color='#bf4040' />
+                      <FiChevronsRight size={15} color='#4682B4' />
                     </button>
                   </tr>
                 </tbody>
@@ -54,25 +53,15 @@ const Inventory: React.FC = () => {
             </div>
           </Storage>
           <AddStorage>
-            <h2>Adicionar Item ao estoque</h2>
-            <div className='input-block'>
-              <label htmlFor='Produto'>Produto</label>
-              <Input name='Produto'></Input>
-            </div>
-            <div className='input-block'>
-              <label htmlFor='Produto'>Marca</label>
-              <Input name='Produto'></Input>
-            </div>
-            <div className='input-block'>
-              <label htmlFor='Produto'>Quantidade</label>
-              <Input name='Produto'></Input>
-            </div>
-            <div className='input-block'>
-              <label htmlFor='Produto'>Preço</label>
-              <Input name='Produto'></Input>
+            <h2>Produto selecionado</h2>
+            <div className='lastsell'>
+              <img
+                src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/EAN13.svg/1200px-EAN13.svg.png'
+                alt=''
+              />
             </div>
             <SellButton>
-              A{'  '}D{'  '}I{'  '}C{'  '}I{'  '}O{'  '}N{'  '}A{'  '}R
+              G{'  '}E{'  '}R{'  '}A{'  '}R
             </SellButton>
           </AddStorage>
         </InventoryContainer>
@@ -81,4 +70,4 @@ const Inventory: React.FC = () => {
   )
 }
 
-export default Inventory
+export default Barcode

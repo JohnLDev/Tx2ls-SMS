@@ -25,18 +25,16 @@ export const Page = styled.div`
   align-items: center;
   position: relative;
 `
-export const InventoryContainer = styled.div`
+export const HistoryContainer = styled.div`
   display: flex;
+  flex-direction: column;
 
   width: 100%;
   height: 100%;
-  .storage {
-  }
 `
-export const Storage = styled.div`
-  width: 50%;
+export const HisyoryDiv = styled.div`
+  width: 100%;
   height: 100%;
-
   display: flex;
   flex-direction: column;
 
@@ -45,10 +43,10 @@ export const Storage = styled.div`
     color: #4169e1;
 
     margin-bottom: 20px;
-    margin-top: 10%;
+    margin-top: 5px;
     text-align: center;
   }
-  .lastsell {
+  .history {
     h2 {
       color: #4169e1;
 
@@ -57,8 +55,8 @@ export const Storage = styled.div`
       text-align: center;
     }
     background: #f8f8ff;
-    height: 70%;
-    max-height: 70%;
+    height: 80%;
+    max-height: 80%;
     width: 90%;
 
     border: 1px solid #d3d3d3;
@@ -84,7 +82,7 @@ export const Storage = styled.div`
         height: 100%;
       }
       td {
-        width: 25%;
+        width: 15%;
         text-align: center;
         border: 1px solid #d3d3d3;
       }
@@ -92,21 +90,29 @@ export const Storage = styled.div`
   }
 `
 
-export const AddStorage = styled.div`
+export const FindHistory = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 30%;
 
-  width: 50%;
-  height: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  width: 100%;
 
   h2 {
+    margin-top: 1%;
     color: #4169e1;
 
     margin-bottom: 20px;
-    margin-top: 10%;
   }
-  .input-block {
+  .inputs {
+    display: flex;
+    align-items: center;
+  }
+
+  .inputs .input-block {
     width: 60%;
     color: #4169e1;
   }
@@ -135,10 +141,10 @@ export const Input = styled.input`
 `
 
 export const SellButton = styled.button`
-  width: 30%;
-  height: 8.61%;
+  width: 35%;
+  height: 40%;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   border-radius: 20px;
   border: 0;
   background: #3cb371;

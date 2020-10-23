@@ -9,7 +9,6 @@ import {
   SalesContainer,
   SellButton,
   SellButtonRight,
-  Venda,
 } from './styles'
 import Header from '../../components/Header/Header'
 import Autocomplete from '@material-ui/lab/Autocomplete'
@@ -48,7 +47,7 @@ const Sales: React.FC = () => {
         />
         <Header />
         <SalesContainer>
-          <div className='barcode'>
+          <div id='barcode'>
             <h2>Vendas Via Código de barras</h2>
             <div
               className='inputs'
@@ -74,12 +73,31 @@ const Sales: React.FC = () => {
               style={{ opacity: switchState.checkedA ? 1 : 0.5 }}
             >
               <h3>Ultimas vendas</h3>
-              <Venda>
-                <p>Produto vendido 500 reais</p>
-              </Venda>
+              <table className='table'>
+                <tbody>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Marca</th>
+                    <th>Quantidade</th>
+                    <th>Preço</th>
+                  </tr>
+                  <tr>
+                    <td>Shanpoo</td>
+                    <td>loreal</td>
+                    <td>3</td>
+                    <td>14,99</td>
+                  </tr>
+                  <tr>
+                    <td>Amaciante 5L</td>
+                    <td>Omo</td>
+                    <td>400</td>
+                    <td>18,00</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-          <div className='list'>
+          <div id='list'>
             <h2>Vendas Via Lista de produtos</h2>
             <div
               className='inputs'
@@ -118,9 +136,28 @@ const Sales: React.FC = () => {
               style={{ opacity: switchState.checkedB ? 1 : 0.5 }}
             >
               <h3>Ultimas vendas</h3>
-              <Venda>
-                <p>Produto vendido 500 reais</p>
-              </Venda>
+              <table className='table'>
+                <tbody>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Marca</th>
+                    <th>Quantidade</th>
+                    <th>Preço</th>
+                  </tr>
+                  <tr>
+                    <td>Shanpoo</td>
+                    <td>loreal</td>
+                    <td>3</td>
+                    <td>14,99</td>
+                  </tr>
+                  <tr>
+                    <td>Amaciante 5L</td>
+                    <td>Omo</td>
+                    <td>400</td>
+                    <td>18,00</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </SalesContainer>

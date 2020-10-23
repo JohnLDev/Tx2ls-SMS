@@ -12,13 +12,13 @@ export const Header = styled.header`
   align-items: center;
 
   color: #fff;
-  justify-content: space-around;
 
   .logo {
     display: flex;
     align-items: center;
 
     height: 100%;
+    margin-left: 11%;
   }
   img {
     max-width: 10%;
@@ -28,6 +28,13 @@ export const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &:first-child {
+      margin-left: 2%;
+    }
+    &:last-child {
+      margin-left: 32%;
+    }
 
     color: #fff;
     background: #4682b4;
@@ -46,7 +53,7 @@ export const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: center;
-
+    margin-left: 7%;
     margin-right: 10px;
 
     text-decoration: none;

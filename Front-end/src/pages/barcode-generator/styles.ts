@@ -81,6 +81,7 @@ export const Storage = styled.div`
 
         border: 0;
         background: 0;
+
         height: 100%;
       }
       td {
@@ -99,38 +100,36 @@ export const AddStorage = styled.div`
 
   width: 50%;
   height: 100%;
+  .lastsell {
+    h2 {
+      color: #4169e1;
 
+      margin-bottom: 20px;
+      margin-top: 10%;
+      text-align: center;
+    }
+    background: #f8f8ff;
+    height: 50%;
+    max-height: 50%;
+    width: 70%;
+    margin-top: 5%;
+
+    border: 1px solid #d3d3d3;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   h2 {
     color: #4169e1;
 
     margin-bottom: 20px;
     margin-top: 10%;
   }
-  .input-block {
-    width: 60%;
-    color: #4169e1;
-  }
-`
-
-export const Input = styled.input`
-  height: 45px;
-  width: 90%;
-
-  background: #fff;
-  border: 1px solid #d3e2e5;
-  border-radius: 20px;
-  outline: none;
-  color: #5c8599;
-
-  margin-top: 5px;
-  margin-bottom: 5px;
-  &:first-child {
-    margin-right: 10px;
-  }
-
-  @media (max-width: 600px) {
-    height: 35px;
-    width: 60%;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 20px;
   }
 `
 

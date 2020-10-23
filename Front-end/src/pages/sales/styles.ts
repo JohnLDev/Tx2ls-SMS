@@ -23,6 +23,7 @@ export const Page = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
+  color: #4169e1;
   .switch1 {
     position: absolute;
     top: 90px;
@@ -39,7 +40,7 @@ export const SalesContainer = styled.div`
 
   width: 100%;
   height: 100%;
-  .barcode {
+  #barcode {
     width: 50%;
     height: 100%;
 
@@ -62,6 +63,25 @@ export const SalesContainer = styled.div`
       flex-direction: column;
       align-items: center;
       overflow: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      h3 {
+        text-align: center;
+        width: 100%;
+      }
+      .table {
+        max-width: 100%;
+        margin: 10px;
+        border: 1px solid #d3d3d3;
+        color: #000;
+
+        td {
+          width: 25%;
+          text-align: center;
+          border: 1px solid #d3d3d3;
+        }
+      }
     }
     .inputs {
       width: 70%;
@@ -78,7 +98,7 @@ export const SalesContainer = styled.div`
       justify-content: space-between;
     }
   }
-  .list {
+  #list {
     width: 50%;
     height: 100%;
 
@@ -101,9 +121,39 @@ export const SalesContainer = styled.div`
       border-radius: 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
+
       overflow: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      h3 {
+        text-align: center;
+        width: 100%;
+      }
+      .table {
+        max-width: 100%;
+        margin: 10px;
+        border: 1px solid #d3d3d3;
+        color: #000;
+
+        tr button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          border: 0;
+          background: 0;
+
+          height: 100%;
+        }
+        td {
+          width: 25%;
+          text-align: center;
+          border: 1px solid #d3d3d3;
+        }
+      }
     }
+
     .inputs {
       width: 70%;
 
@@ -144,6 +194,7 @@ export const Input = styled.input`
     width: 60%;
   }
 `
+
 export const InputMenor = styled.input`
   height: 45px;
   width: 20%;
@@ -161,6 +212,7 @@ export const InputMenor = styled.input`
     width: 60%;
   }
 `
+
 export const SellButton = styled.button`
   width: 30%;
   height: 10%;
@@ -176,13 +228,7 @@ export const SellButton = styled.button`
     background: #2e8b57;
   }
 `
-export const Venda = styled.div`
-  width: 100%;
-  margin-top: 10px;
-  display: flex;
 
-  justify-content: center;
-`
 export const SellButtonRight = styled.button`
   width: 320px;
   height: 40px;
