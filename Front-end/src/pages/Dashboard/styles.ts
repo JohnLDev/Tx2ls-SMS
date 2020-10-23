@@ -32,8 +32,12 @@ export const Dash = styled.div`
 
   padding-top: 20px;
   padding-bottom: 20px;
-  height: 90%;
+
   width: 80%;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const MiniHeader = styled.div`
@@ -42,9 +46,9 @@ export const MiniHeader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f8f8ff;
-  /* border-top-left-radius: 20px;
-  border-top-right-radius: 20px; */
+  background: #f0f8ff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 
   height: 40px;
 `
@@ -55,8 +59,11 @@ export const Block = styled.div`
   width: 350px;
   height: 220px;
   margin-left: 20px;
+  margin-bottom: 25px;
 
-  background: #fff;
+  border-radius: 20px;
+
+  background: #f8f8ff;
   /* border-radius: 20px; */
   border: 1px solid #d3d3d3;
 
@@ -69,5 +76,7 @@ export const Block = styled.div`
   img {
     height: 178px;
     width: 348px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
   }
 `

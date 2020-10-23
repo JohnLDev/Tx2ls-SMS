@@ -22,6 +22,17 @@ export const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  .switch1 {
+    position: absolute;
+    top: 90px;
+    left: 260px;
+  }
+  .switch2 {
+    position: absolute;
+    top: 100px;
+    right: 260px;
+  }
 `
 export const SalesContainer = styled.div`
   display: flex;

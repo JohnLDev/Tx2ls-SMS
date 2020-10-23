@@ -48,7 +48,7 @@ const LoginPage: React.FC = () => {
           </div>
           <CheckboxDiv>
             <div className='checkbox-block'>
-              <Checkbox></Checkbox>
+              <Checkbox color='primary'></Checkbox>
               <Label htmlFor='checkbox'>Lembrar de mim</Label>
             </div>
             <div className='forgot'>
