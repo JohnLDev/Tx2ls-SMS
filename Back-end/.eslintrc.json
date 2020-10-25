@@ -2,7 +2,8 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": [
     "standard",
@@ -22,10 +23,23 @@
   "rules": {
     "prettier/prettier":"error",
     "camelcase": "off",
+    "no-useless-constructor": "off",
     "@typescript-eslint/camelcase":"off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
     "@typescript-eslint/no-unused-vars":["error",{
       "argsIgnorePattern":"_"
     }],
+
     "import/extensions":[
       "error",
       "ignorePackages",

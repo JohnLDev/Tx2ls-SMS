@@ -7,6 +7,7 @@ import { Border, Button, Input, Label, Page, Title } from './styles'
 import Header from '../../components/Header/Header'
 
 const CreateNewUserPage: React.FC = () => {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -21,6 +22,17 @@ const CreateNewUserPage: React.FC = () => {
           <div className='login'>
             <Title>Registro de SubUsuário</Title>
             <div className='input-block'>
+              <div className='input'>
+                <Label htmlFor='email'>Nome:</Label>
+              </div>
+              <Input
+                type='text'
+                name='email'
+                value={name}
+                onChange={({ target: { value } }) => setName(value)}
+                style={{ border: name ? '2px solid #A1E9C5' : '0' }}
+              />
+
               <div className='input'>
                 <Label htmlFor='email'>E-mail:</Label>
               </div>

@@ -4,24 +4,33 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "ts-node src/shared/infra/http/server.ts",
     "build": "tsc",
-    "dev:server": "ts-node-dev --transpile-only --inspect --ignore-watch node_modules src/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --inspect --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
+    "test": "jest"
   },
   "dependencies": {
+    "@types/yup": "^0.29.8",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.12.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "mysql": "^2.14.1",
     "pg": "^8.4.1",
-    "typeorm": "^0.2.28"
+    "reflect-metadata": "^0.1.10",
+    "typeorm": "0.2.28",
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.8",
+    "@types/jest": "^26.0.15",
     "@types/jsonwebtoken": "^8.5.0",
+    "@types/multer": "^1.4.4",
+    "@types/node": "^8.0.29",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
     "eslint": "^7.9.0",
@@ -33,8 +42,12 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "jest": "^26.6.1",
     "prettier": "^2.1.1",
+    "ts-jest": "^26.4.2",
+    "ts-node": "3.3.0",
     "ts-node-dev": "^1.0.0-pre.62",
-    "typescript": "^4.0.2"
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "3.3.3333"
   }
 }
