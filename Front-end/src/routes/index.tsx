@@ -12,12 +12,18 @@ import Barcode from '../pages/barcode-generator/index'
 import EnterpriseLoginPage from '../pages/EnterpriseLoginPage/index'
 import EnterpriseRegisterPage from '../pages/EnterpriseRegisterPage'
 import EnterpriseForgotPasswordPage from '../pages/EnterpriseForgotPassword/index'
+import VerifyEmailPage from '../pages/VerifyEmailPage/index'
 
 const Routes: React.FC = () => (
   <BrowserRouter>
     <Switch>
       <Route path='/' exact component={EnterpriseLoginPage} />
       <Route path='/newenterprise' exact component={EnterpriseRegisterPage} />
+      <Route
+        path='/verifyemail/:verify_Key'
+        exact
+        component={VerifyEmailPage}
+      />
       <Route
         path='/forgotenterprise'
         exact

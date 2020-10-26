@@ -1,7 +1,7 @@
 import CreateUserService from '@modules/users/services/CreateUserService'
 import { Router } from 'express'
 import multer from 'multer'
-
+import { container } from 'tsyringe'
 import UploadConfig from '@config/upload'
 
 const userRouter = Router()
@@ -13,7 +13,8 @@ userRouter.post(
   async (request, response) => {
     const { name, email, password, enterprise_Name, whatsapp } = request.body
     const requestImages = request.files as Express.Multer.File[]
-    const createUserService = new CreateUserService()
+
+    const createUserService = container.resolve(CreateUserService)
     const user = await createUserService.execute({
       name,
       email,

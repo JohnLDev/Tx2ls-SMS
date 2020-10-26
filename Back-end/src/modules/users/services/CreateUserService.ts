@@ -1,6 +1,9 @@
-import { getRepository } from 'typeorm'
 import User from '../infra/typeorm/entities/User'
 import * as yup from 'yup'
+
+import IUserRepository from '../repositories/IUserRepository'
+import { injectable, inject } from 'tsyringe'
+import SendConfirmationEmailService from './SendConfirmationEmailService'
 
 interface IRequest {
   name: string
@@ -10,7 +13,14 @@ interface IRequest {
   whatsapp: number
   requestImages: Express.Multer.File[]
 }
+
+@injectable()
 class CreateUserService {
+  constructor(
+    @inject('UserRepository')
+    private userRepository: IUserRepository,
+  ) {}
+
   public async execute({
     name,
     email,
@@ -19,8 +29,6 @@ class CreateUserService {
     whatsapp,
     requestImages,
   }: IRequest): Promise<User> {
-    const userRepository = getRepository(User)
-
     const images = requestImages.map(image => {
       return { path: image.filename }
     })
@@ -50,8 +58,24 @@ class CreateUserService {
       abortEarly: false,
     })
 
-    const user = userRepository.create(data)
-    await userRepository.save(user)
+    const user = await this.userRepository.create(data)
+
+    // const transport = Nodemailer.createTransport({
+    //   host: 'smtp.mailtrap.io',
+    //   port: 2525,
+    //   auth: {
+    //     user: 'b089cbacf6346c',
+    //     pass: 'da2d2b9799cf99',
+    //   },
+    // })
+    const sendConfirmationEmailService = new SendConfirmationEmailService()
+    await sendConfirmationEmailService.execute({
+      email: user.email,
+      verify_Key: user.verify_Key,
+      enterprise_Name: user.enterprise_Name,
+      name: user.name,
+    })
+
     return user
   }
 }
