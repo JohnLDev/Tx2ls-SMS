@@ -1,20 +1,23 @@
+import { inject, injectable } from 'tsyringe'
+
+import IUserRepository from '../repositories/IUserRepository'
 import AppError from '@shared/errors/AppError'
-import { getRepository } from 'typeorm'
 import User from '../infra/typeorm/entities/User'
 
+@injectable()
 export default class ConfirmEmailService {
+  constructor(
+    @inject('UserRepository')
+    private userRepository: IUserRepository,
+  ) {}
+
   public async execute(verify_Key: string): Promise<User> {
-    const userRepository = getRepository(User)
-    const user = await userRepository.findOne({
-      where: {
-        verify_Key,
-      },
-    })
+    const user = await this.userRepository.findByVerify_Key(verify_Key)
     if (!user) {
       throw new AppError('incorrect verify_Key', 404)
     }
     user.is_Verify = true
-    userRepository.save(user)
+    this.userRepository.update(user)
     return user
   }
 }

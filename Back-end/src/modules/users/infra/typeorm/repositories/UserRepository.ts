@@ -30,11 +30,33 @@ class UserRepository implements IUserRepository {
     return user
   }
 
+  public async update(user: User): Promise<User> {
+    await this.ormRepository.save(user)
+    return user
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.ormRepository.delete(id)
+  }
+
   public async findByVerify_Key(verify_Key: string): Promise<User | undefined> {
     const user = await this.ormRepository.findOne({
       where: {
         verify_Key,
       },
+    })
+    return user
+  }
+
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({ where: { email } })
+    return user
+  }
+
+  public async findById(id: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: { id },
+      relations: ['images'],
     })
     return user
   }

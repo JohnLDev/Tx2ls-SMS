@@ -1,9 +1,12 @@
 import User from '../infra/typeorm/entities/User'
 import * as yup from 'yup'
+import { hash } from 'bcryptjs'
 
 import IUserRepository from '../repositories/IUserRepository'
 import { injectable, inject } from 'tsyringe'
 import SendConfirmationEmailService from './SendConfirmationEmailService'
+import AppError from '@shared/errors/AppError'
+import ImageHandler from '@shared/utils/ImageHandler'
 
 interface IRequest {
   name: string
@@ -29,6 +32,16 @@ class CreateUserService {
     whatsapp,
     requestImages,
   }: IRequest): Promise<User> {
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !enterprise_Name ||
+      !whatsapp ||
+      !requestImages
+    ) {
+      throw new AppError('Please inform all fields')
+    }
     const images = requestImages.map(image => {
       return { path: image.filename }
     })
@@ -54,20 +67,27 @@ class CreateUserService {
         )
         .required(),
     })
-    await schema.validate(data, {
+    const isValid = await schema.isValid(data, {
       abortEarly: false,
     })
+    if (!isValid) {
+      ImageHandler.deleteImage(images)
+      await schema.validate(data, { abortEarly: false })
+    }
+
+    const existentUser = await this.userRepository.findByEmail(email)
+
+    if (existentUser) {
+      ImageHandler.deleteImage(images)
+      throw new AppError('Email already exists')
+    }
+
+    data.images = ImageHandler.renameImage(enterprise_Name, images)
+    const hashedPassword = await hash(password, 8)
+    data.password = hashedPassword
 
     const user = await this.userRepository.create(data)
 
-    // const transport = Nodemailer.createTransport({
-    //   host: 'smtp.mailtrap.io',
-    //   port: 2525,
-    //   auth: {
-    //     user: 'b089cbacf6346c',
-    //     pass: 'da2d2b9799cf99',
-    //   },
-    // })
     const sendConfirmationEmailService = new SendConfirmationEmailService()
     await sendConfirmationEmailService.execute({
       email: user.email,

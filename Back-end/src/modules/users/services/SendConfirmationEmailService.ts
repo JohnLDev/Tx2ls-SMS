@@ -34,7 +34,7 @@ class SendConfirmationEmailService {
     const mailOptions = {
       from: 'linkgamercheetos@gmail.com',
       to: email,
-      subject: 'E-mail enviado usando Node!',
+      subject: `Tx2l's confirmação de email`,
       html: htmlToSend,
       context: verify_Key,
     }
