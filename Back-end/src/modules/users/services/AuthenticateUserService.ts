@@ -24,24 +24,23 @@ class AuthenticateUserService {
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const data = {
-      email,
+    const schema = yup.string().email().required()
+
+    const Valid = await schema.isValid(email)
+    console.log(Valid)
+    if (!Valid) {
+      await schema.validate(email)
     }
-    const schema = yup.object().shape({
-      email: yup.string().email().required(),
-    })
-    await schema.validate(data, {
-      abortEarly: false,
-    })
 
     const user = await this.userRepository.findByEmail(email)
     if (!user) {
       throw new AppError('Incorrect email/password combination', 401)
+    } else {
+      if (!user.is_Verify) {
+        throw new AppError('Please verify your email before continue')
+      }
     }
 
-    if (!user.is_Verify) {
-      throw new AppError('Please verify your email before continue')
-    }
     // user.password - Senha não cripitografada
     // password - Senha criptografada
 

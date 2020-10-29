@@ -60,6 +60,22 @@ class UserRepository implements IUserRepository {
     })
     return user
   }
+
+  public async findAll(): Promise<User[] | undefined> {
+    const user = await this.ormRepository.find({ relations: ['images'] })
+    return user
+  }
+
+  public async findByEnterprise_Name(
+    enterprise_Name: string,
+  ): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: {
+        enterprise_Name,
+      },
+    })
+    return user
+  }
 }
 
 export default UserRepository

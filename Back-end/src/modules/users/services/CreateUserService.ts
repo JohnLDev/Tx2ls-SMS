@@ -4,7 +4,6 @@ import { hash } from 'bcryptjs'
 
 import IUserRepository from '../repositories/IUserRepository'
 import { injectable, inject } from 'tsyringe'
-import SendConfirmationEmailService from './SendConfirmationEmailService'
 import AppError from '@shared/errors/AppError'
 import ImageHandler from '@shared/utils/ImageHandler'
 
@@ -87,14 +86,6 @@ class CreateUserService {
     data.password = hashedPassword
 
     const user = await this.userRepository.create(data)
-
-    const sendConfirmationEmailService = new SendConfirmationEmailService()
-    await sendConfirmationEmailService.execute({
-      email: user.email,
-      verify_Key: user.verify_Key,
-      enterprise_Name: user.enterprise_Name,
-      name: user.name,
-    })
 
     return user
   }

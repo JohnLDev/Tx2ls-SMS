@@ -9,7 +9,7 @@ import {
 } from 'typeorm'
 
 import User from '@modules/users/infra/typeorm/entities/User'
-import SubUser from '@modules/users/infra/typeorm/entities/SubUser'
+import SubUser from '@modules/subusers/infra/typeorm/entities/SubUser'
 
 @Entity('sales')
 class Sale {

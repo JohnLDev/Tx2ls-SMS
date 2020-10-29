@@ -22,7 +22,10 @@ class SubUser {
   email: string
 
   @Column()
-  passsword: string
+  password: string
+
+  @Column()
+  user_id: string
 
   @ManyToMany(() => User, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
