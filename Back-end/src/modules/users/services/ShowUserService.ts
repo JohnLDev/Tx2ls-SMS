@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import AppError from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 import { validate } from 'uuid'

@@ -13,6 +13,7 @@ config()
 interface IValidationErrors {
   [key: string]: string[]
 }
+
 const app = express()
 app.use(errorHandler)
 app.use(express.json())

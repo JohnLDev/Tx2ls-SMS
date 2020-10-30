@@ -8,7 +8,7 @@ interface ITokenPayload {
   sub: string
 }
 
-export default function ensureAuthenticated(
+export default function ensureSubAuthenticated(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -24,7 +24,11 @@ export default function ensureAuthenticated(
     const decoded = verify(token, authConfig.jwt.secret as string)
 
     const { sub } = decoded as ITokenPayload
-    request.user = { id: sub }
+    const [user_id, subUser_id] = sub.split('_')
+    console.log(sub)
+    console.log(user_id)
+    request.sub_User = { id: subUser_id }
+    request.user = { id: user_id }
     return next()
   } catch (error) {
     throw new AppError('Invalid JWT token', 401)

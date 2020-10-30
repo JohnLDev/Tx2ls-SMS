@@ -4,7 +4,7 @@ import User from '@modules/users/infra/typeorm/entities/User'
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO'
 import Image from '@modules/users/infra/typeorm/entities/Image'
 
-class UserRepository implements IUserRepository {
+class FakeUserRepository implements IUserRepository {
   private users: User[] = []
 
   public async create({
@@ -54,10 +54,17 @@ class UserRepository implements IUserRepository {
 
   public async findById(id: string): Promise<User | undefined> {
     const user = this.users.find(user => user.id === id)
+
+    if (!user) {
+      return undefined
+    }
     return user
   }
 
   public async findAll(): Promise<User[] | undefined> {
+    if (this.users.length === 0) {
+      return undefined
+    }
     return this.users
   }
 
@@ -71,4 +78,4 @@ class UserRepository implements IUserRepository {
   }
 }
 
-export default UserRepository
+export default FakeUserRepository

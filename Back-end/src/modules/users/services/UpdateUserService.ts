@@ -9,11 +9,11 @@ import ImageHandler from '@shared/utils/ImageHandler'
 
 interface IRequest {
   id: string
-  name: string
-  password: string
-  enterprise_Name: string
-  whatsapp: number
-  requestImages: Express.Multer.File[]
+  name?: string
+  password?: string
+  enterprise_Name?: string
+  whatsapp?: number
+  requestImages?: Express.Multer.File[]
 }
 
 @injectable()
@@ -35,10 +35,9 @@ class UpdateUserService {
     if (!validId) {
       throw new AppError('insert a valid id')
     }
-    const images = requestImages.map(image => {
+    const images = requestImages?.map(image => {
       return { path: image.filename }
     })
-
     const data = {
       id,
       name,
@@ -62,15 +61,23 @@ class UpdateUserService {
     const isValid = await schema.isValid(data, {
       abortEarly: false,
     })
+
     if (!isValid) {
-      ImageHandler.deleteImage(images)
+      if (images) {
+        ImageHandler.deleteImage(images)
+      }
+
       await schema.validate(data, {
         abortEarly: false,
       })
     }
+
     const user = await this.userRepository.findById(id)
+
     if (!user) {
-      ImageHandler.deleteImage(images)
+      if (images) {
+        ImageHandler.deleteImage(images)
+      }
       throw new AppError('User not found', 404)
     }
 
@@ -86,7 +93,7 @@ class UpdateUserService {
     if (whatsapp) {
       user.whatsapp = whatsapp
     }
-    if (requestImages) {
+    if (requestImages && images) {
       ImageHandler.deleteImage(user.images)
       ImageHandler.renameImage(user.enterprise_Name, images)
 

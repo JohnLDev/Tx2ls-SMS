@@ -1,8 +1,10 @@
 import Mailer from '@config/email'
-import AppError from '@shared/errors/AppError'
 import path from 'path'
 import fs from 'fs'
 import handlebars from 'handlebars'
+import * as yup from 'yup'
+import { validate } from 'uuid'
+import AppError from '@shared/errors/AppError'
 
 interface IRequest {
   name: string
@@ -18,6 +20,13 @@ class SendConfirmationEmailService {
     verify_Key,
     enterprise_Name,
   }: IRequest): Promise<void> {
+    const schema = yup.string().email().required()
+    await schema.validate(email)
+
+    if (!validate(verify_Key)) {
+      throw new AppError('verify_Key is invalid')
+    }
+
     const filePath = path.join(
       __dirname,
       '../../../shared/templates/EmailVerification.html',
@@ -38,14 +47,7 @@ class SendConfirmationEmailService {
       html: htmlToSend,
       context: verify_Key,
     }
-    Mailer.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error)
-        throw new AppError('Error in verification email')
-      } else {
-        console.log('Email enviado: ' + info.response)
-      }
-    })
+    Mailer.sendMail(mailOptions)
   }
 }
 

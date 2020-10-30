@@ -5,25 +5,32 @@ import * as yup from 'yup'
 
 import authConfig from '@config/auth'
 import AppError from '@shared/errors/AppError'
-import User from '@modules/users/infra/typeorm/entities/User'
-import IUserRepository from '../repositories/IUserRepository'
+
+import ISubUserRepository from '../repositories/ISubUserRepository'
+import SubUser from '../infra/typeorm/entities/SubUser'
 
 interface IRequest {
   email: string
   password: string
+  user_id: string
 }
+
 interface IResponse {
-  user: User
+  subUser: SubUser
   token: string
 }
 @injectable()
-class AuthenticateUserService {
+class AuthenticateSubUserService {
   constructor(
-    @inject('UserRepository')
-    private userRepository: IUserRepository,
+    @inject('SubUserRepository')
+    private subUserRepository: ISubUserRepository,
   ) {}
 
-  public async execute({ email, password }: IRequest): Promise<IResponse> {
+  public async execute({
+    email,
+    password,
+    user_id,
+  }: IRequest): Promise<IResponse> {
     const schema = yup.string().email().required()
 
     const Valid = await schema.isValid(email)
@@ -32,31 +39,28 @@ class AuthenticateUserService {
       await schema.validate(email)
     }
 
-    const user = await this.userRepository.findByEmail(email)
-    if (!user) {
+    const subUser = await this.subUserRepository.findByEmail(email)
+    if (!subUser) {
       throw new AppError('Incorrect email/password combination', 401)
-    } else {
-      if (!user.is_Verify) {
-        throw new AppError('Please verify your email before continue')
-      }
     }
 
     // user.password - Senha não cripitografada
     // password - Senha criptografada
 
-    const passwordMatched = await compare(password, user.password)
+    const passwordMatched = await compare(password, subUser.password)
     if (!passwordMatched) {
       throw new AppError('Incorrect email/password combination', 401)
     }
 
     const { secret, expiresIn } = authConfig.jwt
+    const subject = user_id + '_' + subUser.id
 
     const token = sign({}, secret as string, {
-      subject: user.id,
+      subject,
       expiresIn: expiresIn,
     })
 
-    return { user, token }
+    return { subUser, token }
   }
 }
-export default AuthenticateUserService
+export default AuthenticateSubUserService

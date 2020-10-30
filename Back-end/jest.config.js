@@ -1,5 +1,6 @@
 const {pathsToModuleNameMapper} = require('ts-jest/utils')
 const {compilerOptions} = require('./tsconfig.json')
+require('reflect-metadata')
 module.exports = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,

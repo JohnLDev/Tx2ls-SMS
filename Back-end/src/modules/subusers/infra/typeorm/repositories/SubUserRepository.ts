@@ -48,8 +48,10 @@ class SubUserRepository implements ISubUserRepository {
     return Subuser
   }
 
-  public async findAll(): Promise<SubUser[] | undefined> {
-    const Subuser = await this.ormRepository.find({ relations: ['images'] })
+  public async findAll(user_id: string): Promise<SubUser[] | undefined> {
+    const Subuser = await this.ormRepository.find({
+      where: { user_id },
+    })
     return Subuser
   }
 }
