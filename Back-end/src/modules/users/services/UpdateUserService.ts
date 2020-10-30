@@ -1,20 +1,13 @@
 import { inject, injectable } from 'tsyringe'
 import { validate } from 'uuid'
+import * as yup from 'yup'
+import { hash } from 'bcryptjs'
 
 import User from '../infra/typeorm/entities/User'
 import IUserRepository from '../repositories/IUserRepository'
-import * as yup from 'yup'
 import AppError from '@shared/errors/AppError'
 import ImageHandler from '@shared/utils/ImageHandler'
-
-interface IRequest {
-  id: string
-  name?: string
-  password?: string
-  enterprise_Name?: string
-  whatsapp?: number
-  requestImages?: Express.Multer.File[]
-}
+import IUpdateUserDTO from '../dtos/IUpdateUserDTO'
 
 @injectable()
 class UpdateUserService {
@@ -30,10 +23,15 @@ class UpdateUserService {
     enterprise_Name,
     whatsapp,
     requestImages,
-  }: IRequest): Promise<User> {
+  }: IUpdateUserDTO): Promise<User> {
     const validId = validate(id)
     if (!validId) {
       throw new AppError('insert a valid id')
+    }
+    if (!name && !password && !whatsapp && !requestImages && !enterprise_Name) {
+      throw new AppError(
+        'you need to inform at least one field to update a user',
+      )
     }
     const images = requestImages?.map(image => {
       return { path: image.filename }
@@ -85,7 +83,7 @@ class UpdateUserService {
       user.name = name
     }
     if (password) {
-      user.password = password
+      user.password = await hash(password, 8)
     }
     if (enterprise_Name) {
       user.enterprise_Name = enterprise_Name

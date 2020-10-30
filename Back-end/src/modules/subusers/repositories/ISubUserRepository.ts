@@ -5,7 +5,8 @@ export default interface ISubUserRepository {
   create(data: ICreateSubUser): Promise<SubUser>
   update(user: SubUser): Promise<SubUser>
   delete(id: string): Promise<void>
-  findByEmail(email: string): Promise<SubUser | undefined>
-  findById(id: string): Promise<SubUser | undefined>
+  findByEmail(email: string, user_id: string): Promise<SubUser | undefined>
+  findById(user_id: string, id: string): Promise<SubUser | undefined>
   findAll(user_id: string): Promise<SubUser[] | undefined>
+  findByName(name: string, user_id: string): Promise<SubUser | undefined>
 }

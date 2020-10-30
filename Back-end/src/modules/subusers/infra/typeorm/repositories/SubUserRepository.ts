@@ -35,15 +35,22 @@ class SubUserRepository implements ISubUserRepository {
     await this.ormRepository.delete(id)
   }
 
-  public async findByEmail(email: string): Promise<SubUser | undefined> {
-    const Subuser = await this.ormRepository.findOne({ where: { email } })
+  public async findByEmail(
+    email: string,
+    user_id: string,
+  ): Promise<SubUser | undefined> {
+    const Subuser = await this.ormRepository.findOne({
+      where: { email, user_id },
+    })
     return Subuser
   }
 
-  public async findById(id: string): Promise<SubUser | undefined> {
+  public async findById(
+    user_id: string,
+    id: string,
+  ): Promise<SubUser | undefined> {
     const Subuser = await this.ormRepository.findOne({
-      where: { id },
-      relations: ['images'],
+      where: { user_id, id },
     })
     return Subuser
   }
@@ -51,6 +58,16 @@ class SubUserRepository implements ISubUserRepository {
   public async findAll(user_id: string): Promise<SubUser[] | undefined> {
     const Subuser = await this.ormRepository.find({
       where: { user_id },
+    })
+    return Subuser
+  }
+
+  public async findByName(
+    user_id: string,
+    name: string,
+  ): Promise<SubUser | undefined> {
+    const Subuser = await this.ormRepository.findOne({
+      where: { user_id, name },
     })
     return Subuser
   }

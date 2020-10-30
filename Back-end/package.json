@@ -7,12 +7,11 @@
     "start": "ts-node src/shared/infra/http/server.ts",
     "build": "tsc",
     "dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --inspect --ignore-watch node_modules src/shared/infra/http/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "test": "jest --silent"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "class-validator": "^0.12.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
@@ -56,6 +55,5 @@
     "ts-node-dev": "^1.0.0-pre.62",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.0"
-
   }
 }

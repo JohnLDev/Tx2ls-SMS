@@ -6,8 +6,15 @@ import UserRepository from '@modules/users/infra/typeorm/repositories/UserReposi
 import ISubUserRepository from '@modules/subusers/repositories/ISubUserRepository'
 import SubUserRepository from '@modules/subusers/infra/typeorm/repositories/SubUserRepository'
 
+import IStorageRepository from '@modules/store/repositories/IStorageRepository'
+import StorageRepository from '@modules/store/infra/typeorm/repositories/StorageRepository'
+
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository)
 container.registerSingleton<ISubUserRepository>(
   'SubUserRepository',
   SubUserRepository,
+)
+container.registerSingleton<IStorageRepository>(
+  'StorageRepository',
+  StorageRepository,
 )

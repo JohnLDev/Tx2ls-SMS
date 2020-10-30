@@ -8,12 +8,7 @@ import AppError from '@shared/errors/AppError'
 
 import ISubUserRepository from '../repositories/ISubUserRepository'
 import SubUser from '../infra/typeorm/entities/SubUser'
-
-interface IRequest {
-  email: string
-  password: string
-  user_id: string
-}
+import ILoginSubUserDTO from '@modules/subusers/dtos/ILoginSubUserDTO'
 
 interface IResponse {
   subUser: SubUser
@@ -30,7 +25,7 @@ class AuthenticateSubUserService {
     email,
     password,
     user_id,
-  }: IRequest): Promise<IResponse> {
+  }: ILoginSubUserDTO): Promise<IResponse> {
     const schema = yup.string().email().required()
 
     const Valid = await schema.isValid(email)
@@ -39,7 +34,7 @@ class AuthenticateSubUserService {
       await schema.validate(email)
     }
 
-    const subUser = await this.subUserRepository.findByEmail(email)
+    const subUser = await this.subUserRepository.findByEmail(email, user_id)
     if (!subUser) {
       throw new AppError('Incorrect email/password combination', 401)
     }

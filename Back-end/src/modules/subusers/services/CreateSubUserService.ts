@@ -1,15 +1,13 @@
+import 'reflect-metadata'
 import { inject, injectable } from 'tsyringe'
 import SubUser from '../infra/typeorm/entities/SubUser'
 import ISubUserRepository from '../repositories/ISubUserRepository'
 import * as yup from 'yup'
 import { hash } from 'bcryptjs'
+import AppError from '@shared/errors/AppError'
 
-interface IRequest {
-  name: string
-  email: string
-  password: string
-  user_id: string
-}
+import ICreateSubUserDTO from '@modules/subusers/dtos/ICreateSubUserDTO'
+import { validate } from 'uuid'
 @injectable()
 export default class CreateSubUserService {
   constructor(
@@ -22,7 +20,10 @@ export default class CreateSubUserService {
     email,
     password,
     user_id,
-  }: IRequest): Promise<SubUser> {
+  }: ICreateSubUserDTO): Promise<SubUser> {
+    if (!validate(user_id)) {
+      throw new AppError('user_id is invalid')
+    }
     const data = {
       name,
       email,
@@ -37,6 +38,14 @@ export default class CreateSubUserService {
       user_id: yup.string().required(),
     })
     await schema.validate(data)
+
+    const existSubUser = await this.SubUserRepository.findByEmail(
+      email,
+      user_id,
+    )
+    if (existSubUser) {
+      throw new AppError('Email already registered')
+    }
     const hashedPassword = await hash(password, 8)
     data.password = hashedPassword
     const SubUser = await this.SubUserRepository.create(data)

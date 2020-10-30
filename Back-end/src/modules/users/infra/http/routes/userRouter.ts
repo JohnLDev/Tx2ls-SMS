@@ -2,7 +2,7 @@ import { Router } from 'express'
 import multer from 'multer'
 
 import UploadConfig from '@config/upload'
-import EnsureAuthenticated from '@modules/users/infra/http/middlewares/ensureaAuthenticated'
+import EnsureAuthenticated from '@shared/infra/http/middlewares/ensureaAuthenticated'
 import UserController from '@modules/users/infra/http/controllers/UserController'
 
 const userController = new UserController()

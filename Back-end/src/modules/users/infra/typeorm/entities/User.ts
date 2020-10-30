@@ -7,8 +7,9 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm'
-import { IsEmail } from 'class-validator'
+
 import Image from '@modules/users/infra/typeorm/entities/Image'
+import SubUser from '@modules/subusers/infra/typeorm/entities/SubUser'
 
 @Entity('users')
 class User {
@@ -18,7 +19,6 @@ class User {
   @Column()
   name: string
 
-  @IsEmail()
   @Column()
   email: string
 
@@ -36,6 +36,9 @@ class User {
 
   @Column({ generated: 'uuid' })
   verify_Key: string
+
+  @OneToMany(() => SubUser, SubUser => SubUser.user)
+  subusers: SubUser[]
 
   @OneToMany(() => Image, image => image.user, {
     cascade: ['insert', 'update'],

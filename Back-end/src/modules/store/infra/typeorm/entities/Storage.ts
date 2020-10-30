@@ -30,6 +30,9 @@ class Storage {
   @Column()
   barcode: string
 
+  @Column()
+  user_id: string
+
   @ManyToMany(() => User, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User

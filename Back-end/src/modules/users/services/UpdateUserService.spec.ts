@@ -63,6 +63,18 @@ describe('UpdateUserService', () => {
     ).rejects.toBeInstanceOf(ValidationError)
   })
 
+  it('should be not able to update a user with any fulfilled field', async () => {
+    const fakeUserRepository = new FakeUserRepository()
+
+    const updateUserService = new UpdateUserService(fakeUserRepository)
+
+    expect(
+      updateUserService.execute({
+        id: v4(),
+      }),
+    ).rejects.toBeInstanceOf(ValidationError)
+  })
+
   it('should be not able to update a user that does not exist', async () => {
     const fakeUserRepository = new FakeUserRepository()
 
