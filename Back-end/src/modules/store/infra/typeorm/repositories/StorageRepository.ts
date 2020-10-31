@@ -78,6 +78,16 @@ class StorageRepository implements IStorageRepository {
     })
     return item
   }
+
+  public async findByBarcode(
+    barcode: string,
+    user_id: string,
+  ): Promise<Storage | undefined> {
+    const item = await this.OrmRepository.findOne({
+      where: { user_id, barcode },
+    })
+    return item
+  }
 }
 
 export default StorageRepository

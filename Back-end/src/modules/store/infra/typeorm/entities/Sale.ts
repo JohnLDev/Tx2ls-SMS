@@ -28,9 +28,15 @@ class Sale {
   @Column()
   amount: number
 
+  @Column()
+  user_id: string
+
   @ManyToMany(() => User, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User
+
+  @Column()
+  subUser_id: string
 
   @ManyToMany(() => SubUser, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'subUser_id' })

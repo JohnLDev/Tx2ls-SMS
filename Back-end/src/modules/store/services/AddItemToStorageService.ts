@@ -3,7 +3,9 @@ import BarcodeGenerator from '@shared/utils/BarcodeGenerator'
 import IStorageRepository from '../repositories/IStorageRepository'
 import { inject, injectable } from 'tsyringe'
 import Storage from '../infra/typeorm/entities/Storage'
-import IAddItem from '../dtos/IAddItem'
+import IAddItemDTO from '../dtos/IAddItemDTO'
+import { validate } from 'uuid'
+import AppError from '@shared/errors/AppError'
 
 @injectable()
 class AddItemToStorageService {
@@ -18,7 +20,10 @@ class AddItemToStorageService {
     price,
     amount,
     user_id,
-  }: IAddItem): Promise<Storage> {
+  }: IAddItemDTO): Promise<Storage> {
+    if (!validate(user_id)) {
+      throw new AppError('user_id is invalid')
+    }
     const data = {
       name,
       brand,

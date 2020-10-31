@@ -17,4 +17,5 @@ export default interface IStorageRepository {
 
   findById(id: string, user_id: string): Promise<Storage | undefined>
   findAll(user_id: string): Promise<Storage[] | undefined>
+  findByBarcode(barcode: string, user_id: string): Promise<Storage | undefined>
 }

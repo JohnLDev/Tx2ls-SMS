@@ -9,6 +9,9 @@ import SubUserRepository from '@modules/subusers/infra/typeorm/repositories/SubU
 import IStorageRepository from '@modules/store/repositories/IStorageRepository'
 import StorageRepository from '@modules/store/infra/typeorm/repositories/StorageRepository'
 
+import ISaleRepository from '@modules/store/repositories/ISaleRepository'
+import SaleRepository from '@modules/store/infra/typeorm/repositories/SaleRepository'
+
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository)
 container.registerSingleton<ISubUserRepository>(
   'SubUserRepository',
@@ -18,3 +21,5 @@ container.registerSingleton<IStorageRepository>(
   'StorageRepository',
   StorageRepository,
 )
+
+container.registerSingleton<ISaleRepository>('SaleRepository', SaleRepository)
