@@ -3,6 +3,7 @@ import CreateSubUserService from '@modules/subusers/services/CreateSubUserServic
 import DeleteSubUserService from '@modules/subusers/services/DeleteSubUserService'
 import IndexSubUserService from '@modules/subusers/services/IndexSubUserService'
 import UpdateSubUserService from '@modules/subusers/services/UpdateSubUserService'
+import SubUserView from '@modules/subusers/views/SubUserView'
 import { Response, Request } from 'express'
 import { container } from 'tsyringe'
 
@@ -19,7 +20,7 @@ export default class SubUserController {
       user_id,
     })
 
-    return response.status(201).json(SubUser)
+    return response.status(201).json(SubUserView.render(SubUser))
   }
 
   public async login(request: Request, response: Response): Promise<Response> {
@@ -35,7 +36,9 @@ export default class SubUserController {
       user_id,
     })
 
-    return response.status(200).json({ subUser, token })
+    return response
+      .status(200)
+      .json({ subUser: SubUserView.render(subUser), token })
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
@@ -48,7 +51,7 @@ export default class SubUserController {
       name: (name as unknown) as string,
     })
 
-    return response.status(200).json(subUsers)
+    return response.status(200).json(SubUserView.renderMany(subUsers))
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -65,7 +68,7 @@ export default class SubUserController {
       id,
     })
 
-    return response.status(201).json(SubUser)
+    return response.status(201).json(SubUserView.render(SubUser))
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

@@ -49,7 +49,10 @@ class UserRepository implements IUserRepository {
   }
 
   public async findByEmail(email: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne({ where: { email } })
+    const user = await this.ormRepository.findOne({
+      where: { email },
+      relations: ['images'],
+    })
     return user
   }
 
@@ -68,8 +71,8 @@ class UserRepository implements IUserRepository {
 
   public async findByEnterprise_Name(
     enterprise_Name: string,
-  ): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne({
+  ): Promise<User[] | undefined> {
+    const user = await this.ormRepository.find({
       where: {
         enterprise_Name,
       },

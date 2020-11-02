@@ -10,12 +10,12 @@ class IndexUserService {
     private userRepository: IUserRepository,
   ) {}
 
-  public async execute(enterprise_Name?: string): Promise<User[] | User> {
+  public async execute(enterprise_Name?: string): Promise<User[]> {
     if (enterprise_Name) {
       const user = await this.userRepository.findByEnterprise_Name(
         enterprise_Name,
       )
-      if (!user) {
+      if (!user || user.length === 0) {
         throw new AppError('Users not found', 404)
       }
       return user

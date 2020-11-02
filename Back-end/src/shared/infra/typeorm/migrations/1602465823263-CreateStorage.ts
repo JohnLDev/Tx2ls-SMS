@@ -28,7 +28,7 @@ export class CreateStorage1602465823263 implements MigrationInterface {
           },
           {
             name: 'amount',
-            type: 'varchar',
+            type: 'integer',
           },
           {
             name: 'barcode',

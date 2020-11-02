@@ -25,6 +25,61 @@ describe('UpdateSubUserService', () => {
 
     expect(updatedSubUser.name).toBe('novo nome')
   })
+
+  it('should be not able to update an email to an existent email ', async () => {
+    const fakeSubUserRepository = new FakeSubUserRepository()
+    const createSubUserService = new CreateSubUserService(fakeSubUserRepository)
+    const updateSubUserService = new UpdateSubUserService(fakeSubUserRepository)
+    const subUser = await createSubUserService.execute({
+      name: 'johnlenon',
+      email: 'email@example.com',
+      password: '1234567',
+      user_id: v4(),
+    })
+    await createSubUserService.execute({
+      name: 'john2lenon',
+      email: 'email2@example.com',
+      password: '1234567',
+      user_id: v4(),
+    })
+    try {
+      await updateSubUserService.execute({
+        email: 'email2@example.com',
+        id: subUser.id,
+        user_id: v4(),
+      })
+    } catch (error) {
+      expect(error.message).toBe('email already exists')
+    }
+  })
+
+  it('should be not able to update a name to an existent name ', async () => {
+    const fakeSubUserRepository = new FakeSubUserRepository()
+    const createSubUserService = new CreateSubUserService(fakeSubUserRepository)
+    const updateSubUserService = new UpdateSubUserService(fakeSubUserRepository)
+    const subUser = await createSubUserService.execute({
+      name: 'johnlenon',
+      email: 'email@example.com',
+      password: '1234567',
+      user_id: v4(),
+    })
+    await createSubUserService.execute({
+      name: 'john2lenon',
+      email: 'email2@example.com',
+      password: '1234567',
+      user_id: v4(),
+    })
+    try {
+      await updateSubUserService.execute({
+        name: 'john2lenon',
+        id: subUser.id,
+        user_id: v4(),
+      })
+    } catch (error) {
+      expect(error.message).toBe('Name already exists')
+    }
+  })
+
   it('should be not able to update with a invalid id', async () => {
     const fakeSubUserRepository = new FakeSubUserRepository()
 
@@ -39,7 +94,7 @@ describe('UpdateSubUserService', () => {
         user_id: v4(),
       })
     } catch (error) {
-      expect(error).toBeInstanceOf(AppError)
+      expect(error.message).toBe('id is invalid')
     }
   })
 

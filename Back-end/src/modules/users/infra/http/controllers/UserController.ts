@@ -1,3 +1,4 @@
+import CreateSubUserService from '@modules/subusers/services/CreateSubUserService'
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService'
 import ConfirmEmailService from '@modules/users/services/ConfirmEmailService'
 import CreateUserService from '@modules/users/services/CreateUserService'
@@ -6,6 +7,8 @@ import IndexUserService from '@modules/users/services/IndexUserService'
 import SendConfirmationEmailService from '@modules/users/services/SendConfirmationEmailService'
 import ShowUserService from '@modules/users/services/ShowUserService'
 import UpdateUserService from '@modules/users/services/UpdateUserService'
+import UserView from '@modules/users/views/UserView'
+import SubUserView from '@modules/subusers/views/SubUserView'
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 
@@ -15,7 +18,7 @@ export default class UserController {
     const indexUserService = container.resolve(IndexUserService)
     const users = await indexUserService.execute(enterprise_Name as string)
 
-    return response.status(200).json(users)
+    return response.status(200).json(UserView.renderMany(users))
   }
 
   public async Show(request: Request, response: Response): Promise<Response> {
@@ -23,7 +26,7 @@ export default class UserController {
     const showUserService = container.resolve(ShowUserService)
     const user = await showUserService.execute(id)
 
-    return response.status(200).json(user)
+    return response.status(200).json(UserView.render(user))
   }
 
   public async Create(request: Request, response: Response): Promise<Response> {
@@ -47,7 +50,7 @@ export default class UserController {
       name: user.name,
     })
 
-    return response.status(201).json(user)
+    return response.status(201).json(UserView.render(user))
   }
 
   public async Login(request: Request, response: Response): Promise<Response> {
@@ -58,7 +61,7 @@ export default class UserController {
       email,
       password,
     })
-    return response.status(200).json({ user, token })
+    return response.status(200).json({ user: UserView.render(user), token })
   }
 
   public async VerifyEmail(
@@ -69,7 +72,18 @@ export default class UserController {
 
     const confirmEmailService = container.resolve(ConfirmEmailService)
     const user = await confirmEmailService.execute(verify_Key)
-    return response.status(200).json(user)
+    const createSubUserService = container.resolve(CreateSubUserService)
+    const subUser = await createSubUserService.execute({
+      name: user.name,
+      email: user.email,
+      password: 'admin',
+      user_id: user.id,
+      isAdm: true,
+    })
+    return response.status(200).json({
+      user: UserView.render(user),
+      subUser: SubUserView.render(subUser),
+    })
   }
 
   public async Delete(request: Request, response: Response): Promise<Response> {
@@ -94,6 +108,6 @@ export default class UserController {
       whatsapp,
       requestImages,
     })
-    return response.status(200).json(updatedUser)
+    return response.status(200).json(UserView.render(updatedUser))
   }
 }

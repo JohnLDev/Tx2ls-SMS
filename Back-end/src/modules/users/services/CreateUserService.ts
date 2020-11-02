@@ -75,10 +75,18 @@ class CreateUserService {
     }
 
     const existentUser = await this.userRepository.findByEmail(email)
+    const existentEnterpriseName = await this.userRepository.findByEnterprise_Name(
+      enterprise_Name,
+    )
 
     if (existentUser) {
       ImageHandler.deleteImage(images)
       throw new AppError('Email already exists')
+    }
+
+    if (existentEnterpriseName?.length !== 0) {
+      ImageHandler.deleteImage(images)
+      throw new AppError('enterprise_Name already exists')
     }
 
     data.images = ImageHandler.renameImage(enterprise_Name, images)

@@ -20,15 +20,20 @@ export default class CreateSubUserService {
     email,
     password,
     user_id,
+    isAdm,
   }: ICreateSubUserDTO): Promise<SubUser> {
     if (!validate(user_id)) {
       throw new AppError('user_id is invalid')
+    }
+    if (!isAdm) {
+      isAdm = false
     }
     const data = {
       name,
       email,
       password,
       user_id,
+      isAdm,
     }
 
     const schema = yup.object().shape({
@@ -36,15 +41,25 @@ export default class CreateSubUserService {
       email: yup.string().email().required(),
       password: yup.string().min(6).required(),
       user_id: yup.string().required(),
+      isAdm: yup.boolean(),
     })
     await schema.validate(data)
 
-    const existSubUser = await this.SubUserRepository.findByEmail(
+    const existSubUserEmail = await this.SubUserRepository.findByEmail(
       email,
       user_id,
     )
-    if (existSubUser) {
+    if (existSubUserEmail) {
       throw new AppError('Email already registered')
+    }
+
+    const existSubUserName = await this.SubUserRepository.findByName(
+      user_id,
+      name,
+    )
+
+    if (existSubUserName) {
+      throw new AppError('Name already registered')
     }
     const hashedPassword = await hash(password, 8)
     data.password = hashedPassword

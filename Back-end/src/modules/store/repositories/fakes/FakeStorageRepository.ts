@@ -15,7 +15,7 @@ class StorageRepository implements IStorageRepository {
   }: IAddItemRepository): Promise<Storage> {
     const item = new Storage()
 
-    item.id = '1'
+    item.id = String(this.storage.length + 1)
     item.name = name
     item.brand = brand
     item.price = price

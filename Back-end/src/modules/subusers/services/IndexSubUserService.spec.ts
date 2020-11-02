@@ -38,7 +38,7 @@ describe('IndexSubUserService', () => {
       name: 'johnlenon',
     })
 
-    expect(subUser).toHaveProperty('id')
+    expect(subUser.length).toBeGreaterThanOrEqual(1)
   })
 
   it('should be not able to list subusers if they do not exist', async () => {

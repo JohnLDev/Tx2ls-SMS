@@ -15,7 +15,7 @@ describe('ConfirmUserService', () => {
       name: 'Johnlenon',
       email: 'john@lenon.com',
       password: '1234567',
-      enterprise_Name: 'Tx2ls',
+      enterprise_Name: 'Tx2ls312312312',
       whatsapp: 8798789987,
       requestImages: (requestImages as unknown) as Express.Multer.File[],
     })

@@ -70,8 +70,8 @@ class FakeUserRepository implements IUserRepository {
 
   public async findByEnterprise_Name(
     enterprise_Name: string,
-  ): Promise<User | undefined> {
-    const user = this.users.find(
+  ): Promise<User[] | undefined> {
+    const user = this.users.filter(
       user => user.enterprise_Name === enterprise_Name,
     )
     return user

@@ -41,7 +41,13 @@ class AddItemToStorageService {
       user_id: yup.string().required(),
     })
     await schema.validate(data)
-
+    const itemAlreadyExists = await this.storageRepository.findByName(
+      name,
+      user_id,
+    )
+    if (itemAlreadyExists) {
+      throw new AppError('item already exists')
+    }
     const item = await this.storageRepository.create(data)
     return item
   }

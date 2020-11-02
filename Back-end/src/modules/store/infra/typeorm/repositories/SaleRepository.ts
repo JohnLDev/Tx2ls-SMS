@@ -33,6 +33,11 @@ class SaleRepository implements ISaleRepository {
     await this.OrmRepository.delete(id)
   }
 
+  public async update(sale: Sale): Promise<Sale | undefined> {
+    await this.OrmRepository.save(sale)
+    return sale
+  }
+
   public async findAll(user_id: string): Promise<Sale[] | undefined> {
     const sales = await this.OrmRepository.find({ where: { user_id } })
     return sales
@@ -46,22 +51,20 @@ class SaleRepository implements ISaleRepository {
     return sales
   }
 
+  public async findByName(
+    name: string,
+    user_id: string,
+  ): Promise<Sale[] | undefined> {
+    const sales = await this.OrmRepository.find({ where: { user_id, name } })
+    return sales
+  }
+
   public async findByBrand(
     brand: string,
     user_id: string,
   ): Promise<Sale[] | undefined> {
     const sales = await this.OrmRepository.find({
       where: { user_id, brand },
-    })
-    return sales
-  }
-
-  public async findBySubUserName(
-    subUser_Name: string,
-    user_id: string,
-  ): Promise<Sale | undefined> {
-    const sales = await this.OrmRepository.findOne({
-      where: { user_id, subUser_Name },
     })
     return sales
   }

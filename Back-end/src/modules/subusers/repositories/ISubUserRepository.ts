@@ -8,5 +8,5 @@ export default interface ISubUserRepository {
   findByEmail(email: string, user_id: string): Promise<SubUser | undefined>
   findById(user_id: string, id: string): Promise<SubUser | undefined>
   findAll(user_id: string): Promise<SubUser[] | undefined>
-  findByName(name: string, user_id: string): Promise<SubUser | undefined>
+  findByName(user_id: string, name: string): Promise<SubUser | undefined>
 }

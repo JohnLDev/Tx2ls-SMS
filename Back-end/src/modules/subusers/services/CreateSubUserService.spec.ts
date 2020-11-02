@@ -52,4 +52,26 @@ describe('CreateUserService', () => {
       expect(error).toBeInstanceOf(AppError)
     }
   })
+
+  it('should be not able to create a new subUser with a registered name', async () => {
+    const fakeSubUserRepository = new FakeSubUserRepository()
+    const createSubUserService = new CreateSubUserService(fakeSubUserRepository)
+    await createSubUserService.execute({
+      name: 'johnlenon',
+      email: 'email@example.com',
+      password: '1234567',
+      user_id: v4(),
+    })
+
+    try {
+      await createSubUserService.execute({
+        name: 'johnlenon',
+        email: 'email2@example.com',
+        password: '1234567',
+        user_id: v4(),
+      })
+    } catch (error) {
+      expect(error).toBeInstanceOf(AppError)
+    }
+  })
 })

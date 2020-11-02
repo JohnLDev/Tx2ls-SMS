@@ -58,12 +58,23 @@ export default class {
       throw new AppError('user does not exist', 404)
     }
     if (name) {
+      const existName = await this.subUserRepository.findByName(user_id, name)
+      if (existName) {
+        throw new AppError('Name already exists')
+      }
       subUser.name = name
     }
     if (password) {
       subUser.password = await hash(password, 8)
     }
     if (email) {
+      const existEmail = await this.subUserRepository.findByEmail(
+        email,
+        user_id,
+      )
+      if (existEmail) {
+        throw new AppError('email already exists')
+      }
       subUser.email = email
     }
     await this.subUserRepository.update(subUser)

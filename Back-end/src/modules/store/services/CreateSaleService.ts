@@ -16,8 +16,9 @@ class CreateSaleService {
     private saleRepository: ISaleRepository,
     @inject('StorageRepository')
     private storageRepository: IStorageRepository,
-    private item: Storage,
   ) {}
+
+  private item: Storage = ([] as unknown) as Storage
 
   public async execute({
     user_id,
@@ -26,7 +27,7 @@ class CreateSaleService {
     barcode,
     id,
   }: ICreateSaleDTO): Promise<Sale> {
-    if (!validate(user_id) && !validate(subUser_id)) {
+    if (!validate(user_id) || !validate(subUser_id)) {
       throw new AppError('IDs are invalids')
     }
     if (!barcode && !id) {

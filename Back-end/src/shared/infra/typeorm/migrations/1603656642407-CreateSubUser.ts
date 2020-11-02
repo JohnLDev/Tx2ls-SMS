@@ -26,6 +26,11 @@ export class CreateSubUser1603656642407 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'isAdm',
+            type: 'boolean',
+            default: false,
+          },
+          {
             name: 'user_id',
             type: 'uuid',
           },

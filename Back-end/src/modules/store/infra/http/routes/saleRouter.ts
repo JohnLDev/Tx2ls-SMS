@@ -8,6 +8,8 @@ const saleController = new SaleController()
 
 saleRouter.use(ensureAuthenticated)
 
+saleRouter.get('/index', saleController.index)
 saleRouter.post('/sell', saleController.create)
+saleRouter.delete('/revert/:id', saleController.revert)
 
 export default saleRouter

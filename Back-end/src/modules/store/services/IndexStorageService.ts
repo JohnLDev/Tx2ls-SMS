@@ -17,11 +17,7 @@ class IndexStorageService {
     private storageRepository: IStorageRepository,
   ) {}
 
-  public async execute({
-    user_id,
-    name,
-    brand,
-  }: IRequest): Promise<Storage[] | Storage> {
+  public async execute({ user_id, name, brand }: IRequest): Promise<Storage[]> {
     if (!validate(user_id)) {
       throw new AppError('user_id is invalid')
     }
@@ -30,7 +26,8 @@ class IndexStorageService {
       if (!storage) {
         throw new AppError('item not found', 404)
       }
-      return storage
+      const Storages: Storage[] = [storage]
+      return Storages
     }
 
     if (brand && !name) {
@@ -49,7 +46,8 @@ class IndexStorageService {
       if (!storage) {
         throw new AppError('item not found', 404)
       }
-      return storage
+      const Storages: Storage[] = [storage]
+      return Storages
     }
     const storage = await this.storageRepository.findAll(user_id)
     if (!storage) {

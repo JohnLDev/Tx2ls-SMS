@@ -16,7 +16,7 @@ describe('UpdateUserService', () => {
       name: 'Johnlenon',
       email: 'john@lenon.com',
       password: '1234567',
-      enterprise_Name: 'Tx2ls',
+      enterprise_Name: 'Tx2ls312312312',
       whatsapp: 8798789987,
       requestImages: (requestImages as unknown) as Express.Multer.File[],
     })
@@ -30,6 +30,44 @@ describe('UpdateUserService', () => {
     })
     expect(updatedUser.name).toBe('Ian Mathias')
   })
+
+  it('should be not able to update for an enterprise_Name that already exists', async () => {
+    const fakeUserRepository = new FakeUserRepository()
+    const createUserService = new CreateUserService(fakeUserRepository)
+    const updateUserService = new UpdateUserService(fakeUserRepository)
+
+    const user = await createUserService.execute({
+      name: 'Johnlenon',
+      email: 'john@lenon.com',
+      password: '1234567',
+      enterprise_Name: 'Tx2ls312312312',
+      whatsapp: 8798789987,
+      requestImages: (requestImages as unknown) as Express.Multer.File[],
+    })
+
+    await createUserService.execute({
+      name: 'Johnlenon',
+      email: 'john2@lenon.com',
+      password: '1234567',
+      enterprise_Name: 'Tx2ls',
+      whatsapp: 8798789987,
+      requestImages: (requestImages as unknown) as Express.Multer.File[],
+    })
+
+    try {
+      await updateUserService.execute({
+        id: user.id,
+        name: 'Ian Mathias',
+        password: 'senhaa',
+        enterprise_Name: 'Tx2ls',
+        whatsapp: 8273198273,
+        requestImages: (requestImages as unknown) as Express.Multer.File[],
+      })
+    } catch (error) {
+      expect(error).toBeInstanceOf(AppError)
+    }
+  })
+
   it('should be not able to update a user with a invalid type of id', async () => {
     const fakeUserRepository = new FakeUserRepository()
 

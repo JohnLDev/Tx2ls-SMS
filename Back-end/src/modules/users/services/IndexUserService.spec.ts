@@ -14,7 +14,7 @@ describe('IndexUserService', async () => {
       name: 'Johnlenon',
       email: 'john@lenon.com',
       password: '1234567',
-      enterprise_Name: 'Tx2ls',
+      enterprise_Name: 'Tx2ls312312312',
       whatsapp: 8798789987,
       requestImages: (requestImages as unknown) as Express.Multer.File[],
     })
@@ -30,12 +30,12 @@ describe('IndexUserService', async () => {
       name: 'Johnlenon',
       email: 'john@lenon.com',
       password: '1234567',
-      enterprise_Name: 'Tx2ls',
+      enterprise_Name: 'Tx2ls312312312',
       whatsapp: 8798789987,
       requestImages: (requestImages as unknown) as Express.Multer.File[],
     })
     const user = await indexUserService.execute(newUser.enterprise_Name)
-    expect(user).toHaveProperty('id')
+    expect(user.length).toBeGreaterThanOrEqual(1)
   })
 
   it('should be not able to list with no registered users', async () => {
@@ -49,6 +49,10 @@ describe('IndexUserService', async () => {
     const fakeUserRepository = new FakeUserRepository()
     const indexUserService = new IndexUserService(fakeUserRepository)
 
-    expect(indexUserService.execute('invalid')).rejects.toBeInstanceOf(AppError)
+    try {
+      await indexUserService.execute('invalid')
+    } catch (error) {
+      expect(error).toBeInstanceOf(AppError)
+    }
   })
 })

@@ -4,6 +4,7 @@ import DeleteItemFromStorageService from '@modules/store/services/DeleteItemFrom
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 import UpdateItemFromStorageService from '@modules/store/services/UpdateItemFromStorageService'
+import StorageView from '../../../views/StorageView'
 
 class StorageController {
   public async AddItem(
@@ -20,7 +21,7 @@ class StorageController {
       amount,
       user_id,
     })
-    return response.status(201).json(item)
+    return response.status(201).json(StorageView.render(item))
   }
 
   public async IndexStorage(
@@ -36,7 +37,7 @@ class StorageController {
       brand: (brand as unknown) as string,
       user_id,
     })
-    return response.status(200).json(storage)
+    return response.status(200).json(StorageView.renderMany(storage))
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
@@ -68,7 +69,7 @@ class StorageController {
       id,
     })
 
-    return response.status(200).json(updatedItem)
+    return response.status(200).json(StorageView.render(updatedItem))
   }
 }
 

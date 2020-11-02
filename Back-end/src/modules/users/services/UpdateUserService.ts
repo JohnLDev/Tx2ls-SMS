@@ -86,6 +86,12 @@ class UpdateUserService {
       user.password = await hash(password, 8)
     }
     if (enterprise_Name) {
+      const existEnterprise = await this.userRepository.findByEnterprise_Name(
+        enterprise_Name,
+      )
+      if (existEnterprise?.length !== 0) {
+        throw new AppError('Enterprise_Name already registered')
+      }
       user.enterprise_Name = enterprise_Name
     }
     if (whatsapp) {
