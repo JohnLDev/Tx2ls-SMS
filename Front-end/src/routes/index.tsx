@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
-import { Switch, Route, Redirect, BrowserRouter } from 'react-router-dom'
+import { Switch, Redirect, BrowserRouter, Route } from 'react-router-dom'
 import Login from '../pages/Login'
 import ForgotPasswordPage from '../pages/forgot-password'
 import Dashboard from '../pages/Dashboard'
@@ -13,6 +13,7 @@ import EnterpriseLoginPage from '../pages/EnterpriseLoginPage/index'
 import EnterpriseRegisterPage from '../pages/EnterpriseRegisterPage'
 import EnterpriseForgotPasswordPage from '../pages/EnterpriseForgotPassword/index'
 import VerifyEmailPage from '../pages/VerifyEmailPage/index'
+import { UserRouter, SubUserRouter } from './Route'
 
 const Routes: React.FC = () => (
   <BrowserRouter>
@@ -30,14 +31,44 @@ const Routes: React.FC = () => (
         component={EnterpriseForgotPasswordPage}
       />
 
-      <Route path='/login' exact component={Login} />
-      <Route path='/forgotpassword' exact component={ForgotPasswordPage} />
-      <Route path='/dashboard' exact component={Dashboard} />
-      <Route path='/sales' exact component={Sales} />
-      <Route path='/newuser' exact component={CreateNewUserPage} />
-      <Route path='/inventory' exact component={Inventory} />
-      <Route path='/history' exact component={History} />
-      <Route path='/barcode' exact component={Barcode} />
+      <UserRouter path='/login' exact component={Login} isPrivate={true} />
+      <UserRouter
+        path='/forgotpassword'
+        isPrivate={true}
+        exact
+        component={ForgotPasswordPage}
+      />
+      <SubUserRouter
+        path='/dashboard'
+        isPrivate={true}
+        exact
+        component={Dashboard}
+      />
+      <SubUserRouter path='/sales' isPrivate={true} exact component={Sales} />
+      <SubUserRouter
+        path='/newuser'
+        isPrivate={true}
+        exact
+        component={CreateNewUserPage}
+      />
+      <SubUserRouter
+        path='/inventory'
+        isPrivate={true}
+        exact
+        component={Inventory}
+      />
+      <SubUserRouter
+        path='/history'
+        isPrivate={true}
+        exact
+        component={History}
+      />
+      <SubUserRouter
+        path='/barcode'
+        isPrivate={true}
+        exact
+        component={Barcode}
+      />
 
       <Redirect to='/' />
     </Switch>

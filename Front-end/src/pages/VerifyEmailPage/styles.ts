@@ -9,7 +9,7 @@ export const Border = styled.div`
   width: 100vw;
   height: 100vh;
 
-  background: linear-gradient(to bottom right, #fff, #fff, #00bfff, #1e90ff);
+  background: linear-gradient(to top left, #fff, #ffa500, #ffa500, #ff8c00);
 `
 export const Page = styled.div`
   height: 85%;
@@ -30,19 +30,7 @@ export const Page = styled.div`
     justify-content: center;
     flex-direction: column;
 
-    background: linear-gradient(to bottom, #00bfff, #1e90ff);
-
-    .input-block {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      width: 100%;
-      .input {
-        width: 55%;
-      }
-    }
+    background: linear-gradient(to bottom, #a9a9a9, #696969);
   }
   .image-container {
     display: flex;
@@ -51,7 +39,8 @@ export const Page = styled.div`
     width: 50%;
     height: 100%;
 
-    background: #fff;
+    background: linear-gradient(to bottom right, #fff, #ffa500, #ff8c00);
+
     img {
       max-width: 100%;
       max-height: 100%;
@@ -62,7 +51,7 @@ export const Page = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, #fff, #fff, #00bfff, #1e90ff);
+    background: linear-gradient(to bottom, #fff, #ffa500, #ff8c00);
     .login {
       width: 80%;
     }
@@ -77,67 +66,31 @@ export const Title = styled.h1`
   color: #fff;
   line-height: 28px;
   margin-bottom: 20px;
-`
-
-export const Input = styled.input`
-  height: 45px;
-  width: 60%;
-
-  background: #fff;
-  border: 1px solid #d3e2e5;
-  border-radius: 20px;
-  outline: none;
-  color: #5c8599;
-
-  margin-top: 5px;
-  margin-bottom: 5px;
   @media (max-width: 600px) {
-    height: 35px;
-    width: 60%;
+    font-size: 18px;
   }
 `
-export const Label = styled.label`
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 18px;
-  padding-bottom: 10px;
-  color: #363636;
-`
-export const CheckboxDiv = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #363636;
-  width: 58%;
-  a {
-    text-decoration: none;
-    color: #363636;
-    transition: color 0.2s;
-    &:hover {
-      color: #000000;
-    }
-  }
-`
+
 export const Button = styled.button`
   height: 45px;
   width: 60%;
 
   border: 0;
   border-radius: 20px;
-  background: #3cb371;
+  background: #ff4500;
   color: #fff;
   font-weight: 900;
   transition: background-color 0.2s;
-
-  &:hover {
-    background: #2e8b57;
-  }
-
+  margin-top: 10px;
   @media (max-width: 600px) {
     font-size: 18px;
     font-weight: 600;
 
     height: 35px;
     width: 60%;
+  }
+
+  &:hover {
+    background: #ff8c00;
   }
 `

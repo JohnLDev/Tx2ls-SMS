@@ -25,6 +25,9 @@ class SubUser {
   password: string
 
   @Column()
+  is_Adm: boolean
+
+  @Column()
   user_id: string
 
   @ManyToOne(() => User, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })

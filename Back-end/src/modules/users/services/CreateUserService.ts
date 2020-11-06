@@ -42,7 +42,7 @@ class CreateUserService {
       throw new AppError('Please inform all fields')
     }
     const images = requestImages.map(image => {
-      return { path: image.filename }
+      return { path: image.filename.replace(' ', '_') }
     })
     const data = {
       name,

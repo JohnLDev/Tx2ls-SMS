@@ -20,20 +20,20 @@ export default class CreateSubUserService {
     email,
     password,
     user_id,
-    isAdm,
+    is_Adm,
   }: ICreateSubUserDTO): Promise<SubUser> {
     if (!validate(user_id)) {
       throw new AppError('user_id is invalid')
     }
-    if (!isAdm) {
-      isAdm = false
+    if (!is_Adm) {
+      is_Adm = false
     }
     const data = {
       name,
       email,
       password,
       user_id,
-      isAdm,
+      is_Adm,
     }
 
     const schema = yup.object().shape({
@@ -63,6 +63,7 @@ export default class CreateSubUserService {
     }
     const hashedPassword = await hash(password, 8)
     data.password = hashedPassword
+
     const SubUser = await this.SubUserRepository.create(data)
 
     return SubUser

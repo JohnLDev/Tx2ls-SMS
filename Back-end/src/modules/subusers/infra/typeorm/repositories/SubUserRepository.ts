@@ -15,12 +15,14 @@ class SubUserRepository implements ISubUserRepository {
     email,
     password,
     user_id,
+    is_Adm,
   }: ICreateSubUserDTO): Promise<SubUser> {
     const Subuser = this.ormRepository.create({
       name,
       email,
       password,
       user_id,
+      is_Adm,
     })
     await this.ormRepository.save(Subuser)
     return Subuser

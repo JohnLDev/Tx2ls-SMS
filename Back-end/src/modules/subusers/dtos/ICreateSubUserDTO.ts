@@ -3,5 +3,5 @@ export default interface ICreateSubUserDTO {
   email: string
   password: string
   user_id: string
-  isAdm?: boolean
+  is_Adm: boolean
 }

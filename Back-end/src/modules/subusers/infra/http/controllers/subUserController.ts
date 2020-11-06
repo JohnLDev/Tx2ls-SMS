@@ -9,7 +9,7 @@ import { container } from 'tsyringe'
 
 export default class SubUserController {
   public async signup(request: Request, response: Response): Promise<Response> {
-    const { name, email, password } = request.body
+    const { name, email, password, is_Adm } = request.body
     const user_id = request.user.id
 
     const createSubUserService = container.resolve(CreateSubUserService)
@@ -18,6 +18,7 @@ export default class SubUserController {
       email,
       password,
       user_id,
+      is_Adm,
     })
 
     return response.status(201).json(SubUserView.render(SubUser))

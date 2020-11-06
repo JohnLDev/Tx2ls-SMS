@@ -1,6 +1,8 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useState } from 'react'
-
+import * as yup from 'yup'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Logo from '../../assets/racoon.png'
 import {
   Border,
@@ -11,11 +13,49 @@ import {
   Page,
   Title,
 } from './styles'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { useAuth } from '../../hooks/authContext'
 
 const EnterpriseLoginPage: React.FC = () => {
+  const { signIn } = useAuth()
+  const { push } = useHistory()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  async function HandleLogin(): Promise<void> {
+    const data = {
+      email,
+      password,
+    }
+
+    const schema = yup.object().shape({
+      email: yup
+        .string()
+        .email('Seu email precisa ser válido')
+        .required('Você precisa informar um email'),
+      password: yup
+        .string()
+        .min(6, 'Sua senha deve conter no minimo 6 caracteres')
+        .required('Você precisa informar sua senha'),
+    })
+    try {
+      await schema.validate(data, { abortEarly: false })
+      await signIn({ email, password })
+      toast('Logado com sucesso !!')
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        error.errors.map(error => toast.error(error, {}))
+        return
+      }
+      const {
+        data: { message },
+      } = error.response
+      toast.error(message)
+      return
+    }
+    push('/login')
+  }
 
   return (
     <Border>
@@ -53,7 +93,7 @@ const EnterpriseLoginPage: React.FC = () => {
               <Link to='/forgotenterprise'>Esqueceu sua senha ?</Link>
             </div>
           </CheckboxDiv>
-          <Button>
+          <Button onClick={HandleLogin}>
             L{'  '}O{'  '}G{'  '}I{'  '}N
           </Button>
         </div>

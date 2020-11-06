@@ -3,32 +3,117 @@ import React, { ChangeEvent, useState } from 'react'
 
 import Logo from '../../assets/racoon.png'
 import { Border, Button, TermsDiv, Input, Label, Page, Title } from './styles'
-
+import api from '../../services/apiClient'
+import * as yup from 'yup'
 import TermsModal from '../../components/TermsModal/Modal'
 import { Checkbox } from '@material-ui/core'
 import { FiArrowLeft, FiPlus, FiX } from 'react-icons/fi'
 import { useHistory } from 'react-router-dom'
+import { Form } from '@unform/web'
+import { toast } from 'react-toastify'
 
 const EnterpriseRegisterPage: React.FC = () => {
+  const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [enterprise, setEnterprise] = useState('')
   const [whatsapp, setWhatsapp] = useState('')
   const [images, setImages] = useState<File[]>([])
+  const [checkbox, setCheckbox] = useState(false)
   const [previewImages, setPreviewImages] = useState<string[]>([])
   const filevalue = ''
-  const { goBack } = useHistory()
+  const { goBack, push } = useHistory()
+  async function HandleSubmit(): Promise<void> {
+    const testData = {
+      nome,
+      email,
+      password,
+      enterprise,
+      whatsapp,
+      images,
+    }
+    const schema = yup.object().shape({
+      nome: yup.string().required('Informe um Nome'),
+      email: yup
+        .string()
+        .email('Insira um email válido')
+        .required('Insira um email'),
+      password: yup
+        .string()
+        .min(6, 'Senha precisa ter no minimo 6 digitos')
+        .required('Insira uma senha'),
+      enterprise: yup.string().required('Insira o nome da sua empresa'),
+      whatsapp: yup.string().required('Informe o numero do seu whatsapp'),
+    })
+
+    try {
+      await schema.validate(testData)
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        error.errors.map(error => toast.error(error, {}))
+      }
+      return
+    }
+
+    if (images.length !== 2) {
+      toast.error('Por favor insira DUAS fotos')
+      return
+    }
+
+    const data = new FormData()
+    data.append('name', nome)
+    data.append('email', email)
+    data.append('password', password)
+    data.append('enterprise_Name', enterprise)
+    data.append('whatsapp', whatsapp)
+    images.forEach(image => {
+      data.append('images', image)
+    })
+
+    try {
+      if (checkbox) {
+        await api.post('/user/signup', data)
+      } else {
+        toast.warn('Você precisa aceitar os termos')
+        return
+      }
+    } catch (error) {
+      const {
+        data: { message },
+      } = error.response
+      toast.error(message)
+    }
+    toast.success('Registrado com suceso!')
+    toast.warn('Você precisa verificar seu email!')
+    push('/')
+  }
 
   function handleSelectImages(event: ChangeEvent<HTMLInputElement>): void {
     if (!event.target.files) {
       return
     }
-    if (event.target.files.length !== 2) {
-      alert('Por favor insira DUAS fotos')
+
+    const selectedImages = Array.from(event.target.files)
+    let errorInTypeImage = false
+
+    selectedImages.forEach(image => {
+      if (
+        image.type !== 'image/jpg' &&
+        image.type !== 'image/jpeg' &&
+        image.type !== 'image/png'
+      ) {
+        errorInTypeImage = true
+      }
+    })
+    if (errorInTypeImage) {
+      toast.error('Por favor insira apenas imagens no formato jpg ou png')
       return
     }
-    const selectedImages = Array.from(event.target.files)
-    setImages(selectedImages)
+    if (images.length + event.target.files.length > 2) {
+      toast.error('Você pode apenas adicionar duas imagens')
+      return
+    }
+    setImages([...images, ...selectedImages])
 
     const selectedImagesPreview = selectedImages.map(image => {
       return URL.createObjectURL(image)
@@ -58,7 +143,7 @@ const EnterpriseRegisterPage: React.FC = () => {
         </div>
         <div className='register'>
           <Title>Junte-se ao nosso time </Title>
-          <form action=''>
+          <Form onSubmit={HandleSubmit} action='' id='form'>
             <div className='input-block'>
               <div className='input'>
                 <Label htmlFor='email'>E-mail:</Label>
@@ -80,6 +165,17 @@ const EnterpriseRegisterPage: React.FC = () => {
                 value={password}
                 onChange={({ target: { value } }) => setPassword(value)}
                 style={{ border: password ? '2px solid #A1E9C5' : '0' }}
+              />
+
+              <div className='input'>
+                <Label htmlFor='enterprise'>Nome:</Label>
+              </div>
+              <Input
+                type='text'
+                name='enterprise'
+                value={nome}
+                onChange={({ target: { value } }) => setNome(value)}
+                style={{ border: nome ? '2px solid #A1E9C5' : '0' }}
               />
 
               <div className='input'>
@@ -138,15 +234,19 @@ const EnterpriseRegisterPage: React.FC = () => {
                 value={filevalue} // se der erro é nessa linha
               />
             </div>
-          </form>
+          </Form>
           <TermsDiv>
             <TermsModal />
             <div className='checkbox-block'>
-              <Checkbox color='primary'></Checkbox>
+              <Checkbox
+                color='primary'
+                value={checkbox}
+                onChange={({ target: { checked } }) => setCheckbox(checked)}
+              ></Checkbox>
               <Label htmlFor='checkbox'>Aceito os termos</Label>
             </div>
           </TermsDiv>
-          <Button type='submit'>
+          <Button type='submit' form='form'>
             R{'  '}E{'  '}G{'  '}I{'  '}S{'  '}T{'  '}R{'  '}A{'  '}R
           </Button>
         </div>

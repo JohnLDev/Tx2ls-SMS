@@ -9,16 +9,24 @@ import UploadConfig from '@config/upload'
 import { config } from 'dotenv'
 import errorHandler from '@shared/errors/Handler'
 import { ValidationError } from 'yup'
+import cors from 'cors'
+import path from 'path'
+
 config()
 interface IValidationErrors {
   [key: string]: string[]
 }
 
 const app = express()
+app.use(cors())
 app.use(errorHandler)
 app.use(express.json())
 app.use('/files', express.static(UploadConfig.directory))
 app.use(routes)
+app.use(
+  '/uploads/images',
+  express.static(path.join(__dirname, '..', '..', '..', 'upload', 'images')),
+)
 app.use(
   (error: Error, request: Request, response: Response, _next: NextFunction) => {
     if (error instanceof ValidationError) {

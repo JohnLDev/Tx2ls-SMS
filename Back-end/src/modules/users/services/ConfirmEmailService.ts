@@ -17,8 +17,12 @@ export default class ConfirmEmailService {
       throw new AppError('insert a valid verify_Key')
     }
     const user = await this.userRepository.findByVerify_Key(verify_Key)
+
     if (!user) {
       throw new AppError('incorrect verify_Key', 404)
+    }
+    if (user.is_Verify === true) {
+      throw new AppError('email already verified')
     }
     user.is_Verify = true
     this.userRepository.update(user)

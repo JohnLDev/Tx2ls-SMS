@@ -5,6 +5,7 @@ interface IResponse {
   id: string
   name: string
   email: string
+  isAdm: boolean
   created_at: string
   updated_at: string
 }
@@ -14,6 +15,7 @@ export default {
       id: subUser.id,
       name: subUser.name,
       email: subUser.email,
+      isAdm: subUser.is_Adm,
       created_at: FormatDate(subUser.created_at),
       updated_at: FormatDate(subUser.updated_at),
     }

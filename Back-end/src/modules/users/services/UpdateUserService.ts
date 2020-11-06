@@ -34,7 +34,7 @@ class UpdateUserService {
       )
     }
     const images = requestImages?.map(image => {
-      return { path: image.filename }
+      return { path: image.filename.replace(' ', '_') }
     })
     const data = {
       id,

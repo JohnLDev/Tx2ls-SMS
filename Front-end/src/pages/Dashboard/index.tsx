@@ -9,8 +9,11 @@ import Inventário from '../../assets/inv.png'
 import BarCode from '../../assets/barcode.png'
 import NewUser from '../../assets/newuser3.png'
 import History from '../../assets/history.svg'
+import Employers from '../../assets/employers.jpg'
+import { useAuth } from '../../hooks/authContext'
 
 const Dashboard: React.FC = () => {
+  const { subUser } = useAuth()
   return (
     <Border>
       <Page>
@@ -37,15 +40,26 @@ const Dashboard: React.FC = () => {
           <Block>
             <Link to='/history'>
               <MiniHeader>Histórico</MiniHeader>
-              <img src={History} alt='Novo usuário' />
+              <img src={History} alt='histórico de vendas' />
             </Link>
           </Block>
-          <Block>
-            <Link to='/newuser'>
-              <MiniHeader>Criar um novo usuário</MiniHeader>
-              <img src={NewUser} alt='Novo usuário' />
-            </Link>
-          </Block>
+          {subUser?.isAdm && (
+            <>
+              <Block>
+                <Link to='/newuser'>
+                  <MiniHeader>Criar um novo usuário</MiniHeader>
+                  <img src={NewUser} alt='Novo usuário' />
+                </Link>
+              </Block>
+
+              <Block>
+                <Link to='/newuser'>
+                  <MiniHeader>Lista De Funcionários</MiniHeader>
+                  <img src={Employers} alt='Novo usuário' />
+                </Link>
+              </Block>
+            </>
+          )}
         </Dash>
       </Page>
     </Border>

@@ -4,9 +4,10 @@ import { Link, useHistory } from 'react-router-dom'
 import { FiArrowLeft, FiLogOut, FiHome } from 'react-icons/fi'
 
 import { Header } from './styles'
-import Icon from '../../assets/icon.png'
+import { useAuth } from '../../hooks/authContext'
 
 const HeaderTop: React.FC = () => {
+  const { user } = useAuth()
   const { goBack } = useHistory()
   return (
     <Header>
@@ -15,8 +16,8 @@ const HeaderTop: React.FC = () => {
       </button>
 
       <div className='logo'>
-        <img src={Icon} alt='icone' />
-        <h3>Lojas Okada Dashboard</h3>
+        <img src={user.images[0].path} alt='icone' />
+        <h3>{user.enterprise_Name} Dashboard</h3>
       </div>
       <Link to='/dashboard'>
         <FiHome size={24} color='#d3d3d3' className='icon' />

@@ -76,12 +76,12 @@ export default class UserController {
     const subUser = await createSubUserService.execute({
       name: user.name,
       email: user.email,
-      password: 'admin',
+      password: 'administrator',
       user_id: user.id,
-      isAdm: true,
+      is_Adm: true,
     })
+
     return response.status(200).json({
-      user: UserView.render(user),
       subUser: SubUserView.render(subUser),
     })
   }
