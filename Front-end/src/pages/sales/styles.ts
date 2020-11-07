@@ -75,6 +75,7 @@ export const SalesContainer = styled.div`
         margin: 10px;
         border: 1px solid #d3d3d3;
         color: #000;
+        width: 95%;
 
         td {
           width: 25%;
@@ -110,13 +111,19 @@ export const SalesContainer = styled.div`
       margin-bottom: 20px;
       margin-top: 15%;
     }
+    input {
+      margin-left: 10%;
+    }
+    .label {
+      margin-top: 17%;
+    }
     .lastsell {
       background: #f8f8ff;
       height: 60%;
       max-height: 239px;
       width: 70%;
       margin-bottom: 30px;
-      margin-top: 9%;
+      margin-top: 5%;
       border: 1px solid #d3d3d3;
       border-radius: 20px;
       display: flex;
@@ -136,16 +143,6 @@ export const SalesContainer = styled.div`
         border: 1px solid #d3d3d3;
         color: #000;
 
-        tr button {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          border: 0;
-          background: 0;
-
-          height: 100%;
-        }
         td {
           width: 25%;
           text-align: center;

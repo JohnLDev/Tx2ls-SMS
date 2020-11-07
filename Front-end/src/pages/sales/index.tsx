@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-use-before-define
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import {
   Border,
@@ -14,9 +14,31 @@ import Header from '../../components/Header/Header'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
 import Switch from '@material-ui/core/Switch'
+import api from '../../services/apiClient'
+import { toast } from 'react-toastify'
+
+interface Item {
+  id: number
+  name: string
+  brand: string
+  amount: number
+  price: number
+}
 
 const Sales: React.FC = () => {
-  const [switchState, setSwitchState] = React.useState({
+  useEffect(() => {
+    api.get('/storage/index').then(response => {
+      setInventory(response.data)
+    })
+  }, [])
+
+  const [inventory, setInventory] = useState<Item[]>([])
+  const [recentSells, setRecentSells] = useState<Item[]>([])
+  const [selectedOption, setSelectedOption] = useState<Item | null>(null)
+  const [amountList, setAmountList] = useState('')
+  const [barcode, setBarcode] = useState('')
+  const [amount, setAmount] = useState('')
+  const [switchState, setSwitchState] = useState({
     checkedA: true,
     checkedB: true,
   })
@@ -26,6 +48,49 @@ const Sales: React.FC = () => {
       [event.target.name]: event.target.checked,
     })
   }
+  async function HandleSellByID(): Promise<void> {
+    const data = {
+      id: selectedOption?.id,
+      amount: amountList,
+    }
+    if (!data.id || !amountList) {
+      toast.error('Preencha todos os campos')
+      return
+    }
+    try {
+      const response = await api.post('/sale/sell', data)
+      setRecentSells([...recentSells, response.data])
+      toast('Venda Realizada com sucesso!')
+    } catch (error) {
+      const {
+        data: { message },
+      } = error.response
+      toast.error(message)
+    }
+  }
+
+  async function HandleSellByBarcode(): Promise<void> {
+    if (!barcode || !amount) {
+      toast.error('Preencha todos os campos')
+      return
+    }
+    const data = {
+      barcode: barcode,
+      amount: amount,
+    }
+
+    try {
+      const response = await api.post('/sale/sell', data)
+      setRecentSells([...recentSells, response.data])
+      toast('Venda Realizada com sucesso!')
+    } catch (error) {
+      const {
+        data: { message },
+      } = error.response
+      toast.error(message)
+    }
+  }
+
   return (
     <Border>
       <Page>
@@ -55,16 +120,31 @@ const Sales: React.FC = () => {
             >
               <div className='input-block'>
                 <label htmlFor='barcode'>Código de barras</label>
-                <Input name='barcode' disabled={!switchState.checkedA} />
+                <Input
+                  name='barcode'
+                  disabled={!switchState.checkedA}
+                  value={barcode}
+                  onChange={({ target: { value } }) => {
+                    setBarcode(value)
+                  }}
+                />
               </div>
               <div className='input-block'>
                 <label htmlFor='amount'>Quantidade</label>
-                <InputMenor name='amount' disabled={!switchState.checkedA} />
+                <InputMenor
+                  name='amount'
+                  disabled={!switchState.checkedA}
+                  value={amount}
+                  onChange={({ target: { value } }) => {
+                    setAmount(value)
+                  }}
+                />
               </div>
             </div>
             <SellButton
               style={{ opacity: switchState.checkedA ? 1 : 0.5 }}
               disabled={!switchState.checkedA}
+              onClick={HandleSellByBarcode}
             >
               Vender
             </SellButton>
@@ -81,18 +161,14 @@ const Sales: React.FC = () => {
                     <th>Quantidade</th>
                     <th>Preço</th>
                   </tr>
-                  <tr>
-                    <td>Shanpoo</td>
-                    <td>loreal</td>
-                    <td>3</td>
-                    <td>14,99</td>
-                  </tr>
-                  <tr>
-                    <td>Amaciante 5L</td>
-                    <td>Omo</td>
-                    <td>400</td>
-                    <td>18,00</td>
-                  </tr>
+                  {recentSells.map(item => (
+                    <tr key={item.id}>
+                      <td>{item.name} </td>
+                      <td>{item.brand}</td>
+                      <td>{item.amount}</td>
+                      <td>{item.price} Reais</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -106,8 +182,9 @@ const Sales: React.FC = () => {
               <div className='input-block'>
                 <Autocomplete
                   id='combo-box-demo'
-                  options={[]}
-                  // getOptionLabel={() => {}}
+                  options={inventory}
+                  onChange={(event, value) => setSelectedOption(value)}
+                  getOptionLabel={inventory => inventory.name}
                   style={{
                     width: 180,
                     height: 10,
@@ -123,9 +200,23 @@ const Sales: React.FC = () => {
                   )}
                 />
               </div>
+              <div className='input-block'>
+                <label htmlFor='amount' className='label'>
+                  Quantidade
+                </label>
+                <InputMenor
+                  name='amount'
+                  disabled={!switchState.checkedA}
+                  value={amountList}
+                  onChange={({ target: { value } }) => {
+                    setAmountList(value)
+                  }}
+                />
+              </div>
               <SellButtonRight
                 style={{ opacity: switchState.checkedB ? 1 : 0.5 }}
                 disabled={!switchState.checkedB}
+                onClick={HandleSellByID}
               >
                 Vender
               </SellButtonRight>
@@ -144,18 +235,14 @@ const Sales: React.FC = () => {
                     <th>Quantidade</th>
                     <th>Preço</th>
                   </tr>
-                  <tr>
-                    <td>Shanpoo</td>
-                    <td>loreal</td>
-                    <td>3</td>
-                    <td>14,99</td>
-                  </tr>
-                  <tr>
-                    <td>Amaciante 5L</td>
-                    <td>Omo</td>
-                    <td>400</td>
-                    <td>18,00</td>
-                  </tr>
+                  {recentSells.map(item => (
+                    <tr key={item.id}>
+                      <td>{item.name} </td>
+                      <td>{item.brand}</td>
+                      <td>{item.amount}</td>
+                      <td>{item.price} Reais</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

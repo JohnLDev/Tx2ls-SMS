@@ -19,6 +19,13 @@ userRouter.post('/login', userController.Login)
 
 userRouter.patch('/verify-email/:verify_Key', userController.VerifyEmail)
 
+userRouter.post(
+  '/redefine-password-email',
+  userController.SendRedefinePasswordEmail,
+)
+
+userRouter.patch('/redefine-password', userController.RedefinePassword)
+
 userRouter.delete('/userdelete/:id', EnsureAuthenticated, userController.Delete)
 
 userRouter.put(

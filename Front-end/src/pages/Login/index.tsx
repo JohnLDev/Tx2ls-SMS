@@ -22,6 +22,7 @@ const LoginPage: React.FC = () => {
     if (alreadyEmail && alreadyPassword) {
       setEmail(alreadyEmail)
       setPassword(alreadyPassword)
+      setCheckbox(true)
     }
   }, [])
   const { signInSubUser, user } = useAuth()
@@ -100,6 +101,7 @@ const LoginPage: React.FC = () => {
           <CheckboxDiv>
             <div className='checkbox-block'>
               <Checkbox
+                checked={checkbox}
                 color='primary'
                 value={checkbox}
                 onChange={({ target: { checked } }) => setCheckbox(checked)}

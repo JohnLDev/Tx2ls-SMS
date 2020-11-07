@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToMany,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm'
 
 import User from '@modules/users/infra/typeorm/entities/User'
@@ -38,7 +39,11 @@ class Sale {
   @Column()
   subUser_id: string
 
-  @ManyToMany(() => SubUser, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @ManyToOne(() => SubUser, subUser => subUser.Sale, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    eager: true,
+  })
   @JoinColumn({ name: 'subUser_id' })
   sub_User: SubUser
 

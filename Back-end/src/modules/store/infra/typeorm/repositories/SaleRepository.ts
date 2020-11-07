@@ -39,7 +39,9 @@ class SaleRepository implements ISaleRepository {
   }
 
   public async findAll(user_id: string): Promise<Sale[] | undefined> {
-    const sales = await this.OrmRepository.find({ where: { user_id } })
+    const sales = await this.OrmRepository.find({
+      where: { user_id },
+    })
     return sales
   }
 

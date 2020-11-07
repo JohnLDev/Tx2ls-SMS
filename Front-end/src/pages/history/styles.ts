@@ -81,10 +81,14 @@ export const HisyoryDiv = styled.div`
         background: 0;
         height: 100%;
       }
+
       td {
         width: 15%;
         text-align: center;
         border: 1px solid #d3d3d3;
+      }
+      .span {
+        border: 0;
       }
     }
   }
@@ -115,12 +119,14 @@ export const FindHistory = styled.div`
   .inputs .input-block {
     width: 60%;
     color: #4169e1;
+    display: flex;
+    flex-direction: column;
   }
 `
 
 export const Input = styled.input`
   height: 45px;
-  width: 90%;
+  width: 80%;
 
   background: #fff;
   border: 1px solid #d3e2e5;
@@ -141,7 +147,7 @@ export const Input = styled.input`
 `
 
 export const SellButton = styled.button`
-  width: 35%;
+  width: 40%;
   height: 40%;
   margin-top: 15px;
   margin-bottom: 5px;

@@ -36,6 +36,7 @@ interface AuthContextData {
   signIn(credentials: signInCredentials): Promise<void>
   signInSubUser(credentials: signInCredentials): Promise<void>
   signOut(): void
+  signOutSubUser(): void
 
   user: User
   subUser?: SubUser
@@ -62,7 +63,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const signIn = useCallback(async ({ email, password }) => {
     const response = await api.post('/user/login', { email, password })
     const { token, user } = response.data
-    console.log(token)
+
     localStorage.setItem('@Tx2ls-SMS:token', token)
     localStorage.setItem('@Tx2ls-SMS:user', JSON.stringify(user))
 
@@ -73,7 +74,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     async ({ email, password }) => {
       const response = await api.post('/subuser/login', { email, password })
       const { token, subUser } = response.data
-      console.log(token)
 
       localStorage.setItem('@Tx2ls-SMS:token', token)
       localStorage.setItem('@Tx2ls-SMS:SubUser', JSON.stringify(subUser))
@@ -86,9 +86,16 @@ export const AuthProvider: React.FC = ({ children }) => {
   const signOut = useCallback(() => {
     localStorage.removeItem('@Tx2ls-SMS:token')
     localStorage.removeItem('@Tx2ls-SMS:user')
+    localStorage.removeItem('@Tx2ls-SMS:SubUser')
 
     setData({} as AuthState)
   }, [])
+
+  const signOutSubUser = useCallback(() => {
+    localStorage.removeItem('@Tx2ls-SMS:SubUser')
+
+    setData({ user: data.user } as AuthState)
+  }, [data.user])
 
   return (
     <AuthContext.Provider
@@ -98,6 +105,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         signIn,
         signOut,
         signInSubUser,
+        signOutSubUser,
       }}
     >
       {children}

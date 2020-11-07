@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-use-before-define
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import {
   Border,
@@ -11,8 +11,39 @@ import {
   SellButton,
 } from './styles'
 import Header from '../../components/Header/Header'
+import DateMask from '../../utils/DateMask'
+import api from '../../services/apiClient'
+import { FiCornerDownLeft } from 'react-icons/fi'
+
+interface Sale {
+  id: number
+  name: string
+  brand: string
+  amount: number
+  price: number
+  created_at: string
+  sub_User: {
+    name: string
+  }
+}
 
 const History: React.FC = () => {
+  const [income, setIncome] = useState('')
+  const [subUserName, setSubUserName] = useState('')
+  const [dateFrom, setDateFrom] = useState('')
+  const [dateUntil, setDateUntil] = useState('')
+  const [sales, setSales] = useState<Sale[]>([])
+  let salesIncome: number
+  useEffect(() => {
+    api.get(`/sale/index`).then(response => {
+      setSales(response.data)
+    })
+  }, [dateFrom, dateUntil, subUserName])
+  sales.forEach(sale => {
+    salesIncome = salesIncome + sale.price
+  })
+
+  async function HandleRevertSale(id: number): Promise<void> {}
   return (
     <Border>
       <Page>
@@ -23,19 +54,36 @@ const History: React.FC = () => {
             <div className='inputs'>
               <div className='input-block'>
                 <label htmlFor='vendedor'>Vendedor</label>
-                <Input name='vendedor'></Input>
+                <Input
+                  name='vendedor'
+                  value={subUserName}
+                  onChange={({ target: { value } }) => {
+                    setSubUserName(value)
+                  }}
+                ></Input>
+              </div>
+
+              <div className='input-block'>
+                <label htmlFor='Produto'>De</label>
+                <Input
+                  name='dateFrom'
+                  maxLength={10}
+                  value={dateFrom}
+                  onChange={({ target: { value } }) => {
+                    setDateFrom(DateMask(value))
+                  }}
+                ></Input>
               </div>
               <div className='input-block'>
-                <label htmlFor='Produto'>Produto</label>
-                <Input name='Produto'></Input>
-              </div>
-              <div className='input-block'>
-                <label htmlFor='Produto'>Marca</label>
-                <Input name='Produto'></Input>
-              </div>
-              <div className='input-block'>
-                <label htmlFor='Produto'>Data</label>
-                <Input name='Produto'></Input>
+                <label htmlFor='Produto'>Até</label>
+                <Input
+                  name='dateUntil'
+                  maxLength={10}
+                  value={dateUntil}
+                  onChange={({ target: { value } }) => {
+                    setDateUntil(DateMask(value))
+                  }}
+                ></Input>
               </div>
               <SellButton>
                 P{'  '}R{'  '}O{'  '}C{'  '}U{'  '}R{'  '}A{'  '}R
@@ -55,23 +103,40 @@ const History: React.FC = () => {
                     <th>Quantidade</th>
                     <th>Preço</th>
                     <th>Data</th>
+                    <th>Total</th>
                   </tr>
                   <tr>
-                    <td>John Lenon</td>
-                    <td>Shanpoo</td>
-                    <td>loreal</td>
-                    <td>3</td>
-                    <td>14,99</td>
-                    <td>23/10/2020</td>
+                    <td className='span' />
+                    <td className='span' />
+                    <td className='span' />
+                    <td className='span' />
+                    <td className='span' />
+                    <td className='span' />
+                    <td>
+                      {'  '}
+                      Reais
+                    </td>
                   </tr>
-                  <tr>
-                    <td>Ian Mathias</td>
-                    <td>Amaciante 5L</td>
-                    <td>Omo</td>
-                    <td>400</td>
-                    <td>18,00</td>
-                    <td>23/10/2020</td>
-                  </tr>
+                  {sales.map(sale => (
+                    <tr key={sale.id}>
+                      <td>{sale.sub_User.name}</td>
+                      <td>{sale.name}</td>
+                      <td>{sale.brand}</td>
+                      <td>{sale.amount}</td>
+                      <td>{sale.price}</td>
+                      <td>{sale.created_at}</td>
+                      <td className='span'></td>
+                      <td>
+                        <button
+                          onClick={() => {
+                            HandleRevertSale(sale.id)
+                          }}
+                        >
+                          <FiCornerDownLeft size={15} color='#bf9040' />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

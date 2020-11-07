@@ -27,11 +27,10 @@ export const Page = styled.div`
 `
 export const InventoryContainer = styled.div`
   display: flex;
+  justify-content: center;
 
   width: 100%;
   height: 100%;
-  .storage {
-  }
 `
 export const Storage = styled.div`
   width: 50%;
@@ -45,20 +44,29 @@ export const Storage = styled.div`
     color: #4169e1;
 
     margin-bottom: 20px;
-    margin-top: 10%;
+    margin-top: 3%;
     text-align: center;
   }
-  .lastsell {
-    h2 {
-      color: #4169e1;
+  .search {
+    color: #4169e1;
+    margin-top: 2%;
+    width: 85%;
+    display: flex;
+    justify-content: center;
 
-      margin-bottom: 20px;
-      margin-top: 10%;
-      text-align: center;
+    input {
+      width: 80%;
     }
+    button {
+      width: 60%;
+      height: 45px;
+      margin-top: 22px;
+    }
+  }
+  .lastsell {
     background: #f8f8ff;
-    height: 70%;
-    max-height: 70%;
+    height: 65%;
+    max-height: 65%;
     width: 90%;
 
     border: 1px solid #d3d3d3;
@@ -148,5 +156,17 @@ export const SellButton = styled.button`
 
   &:hover {
     background: #2e8b57;
+  }
+`
+export const OpenModalButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #363636;
+  border: 0;
+  background: 0;
+
+  &:hover {
+    color: #000000;
   }
 `

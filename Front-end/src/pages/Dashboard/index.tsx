@@ -53,7 +53,7 @@ const Dashboard: React.FC = () => {
               </Block>
 
               <Block>
-                <Link to='/newuser'>
+                <Link to='/employers'>
                   <MiniHeader>Lista De Funcionários</MiniHeader>
                   <img src={Employers} alt='Novo usuário' />
                 </Link>

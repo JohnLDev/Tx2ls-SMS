@@ -13,6 +13,9 @@ import EnterpriseLoginPage from '../pages/EnterpriseLoginPage/index'
 import EnterpriseRegisterPage from '../pages/EnterpriseRegisterPage'
 import EnterpriseForgotPasswordPage from '../pages/EnterpriseForgotPassword/index'
 import VerifyEmailPage from '../pages/VerifyEmailPage/index'
+import EmployersListPage from '../pages/EmployersListPage'
+import RedefinePasswordPage from '../pages/RedefinePasswordPage'
+import RedefinePasswordEnterprisePage from '../pages/RedefinePasswordEnterprisePage'
 import { UserRouter, SubUserRouter } from './Route'
 
 const Routes: React.FC = () => (
@@ -29,6 +32,13 @@ const Routes: React.FC = () => (
         path='/forgotenterprise'
         exact
         component={EnterpriseForgotPasswordPage}
+      />
+
+      <Route path='/redefine-password' exact component={RedefinePasswordPage} />
+      <Route
+        path='/redefine-password-enterprise'
+        exact
+        component={RedefinePasswordEnterprisePage}
       />
 
       <UserRouter path='/login' exact component={Login} isPrivate={true} />
@@ -68,6 +78,13 @@ const Routes: React.FC = () => (
         isPrivate={true}
         exact
         component={Barcode}
+      />
+
+      <SubUserRouter
+        path='/employers'
+        isPrivate={true}
+        exact
+        component={EmployersListPage}
       />
 
       <Redirect to='/' />

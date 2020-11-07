@@ -4,11 +4,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 
 import User from '@modules/users/infra/typeorm/entities/User'
+import Sale from '@modules/store/infra/typeorm/entities/Sale'
 
 @Entity('sub_Users')
 class SubUser {
@@ -33,6 +35,9 @@ class SubUser {
   @ManyToOne(() => User, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User
+
+  @OneToMany(() => Sale, sale => sale.sub_User)
+  Sale: Sale
 
   @CreateDateColumn()
   created_at: Date

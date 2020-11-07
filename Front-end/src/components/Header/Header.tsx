@@ -7,8 +7,13 @@ import { Header } from './styles'
 import { useAuth } from '../../hooks/authContext'
 
 const HeaderTop: React.FC = () => {
-  const { user } = useAuth()
-  const { goBack } = useHistory()
+  const { user, signOutSubUser } = useAuth()
+  const { goBack, push } = useHistory()
+
+  async function HandleSignOutSubUser(): Promise<void> {
+    signOutSubUser()
+    push('/login')
+  }
   return (
     <Header>
       <button onClick={goBack}>
@@ -24,7 +29,7 @@ const HeaderTop: React.FC = () => {
         Home
       </Link>
 
-      <button>
+      <button onClick={HandleSignOutSubUser}>
         <FiLogOut size={24} color='#d3d3d3' className='icon' />
         Logout
       </button>

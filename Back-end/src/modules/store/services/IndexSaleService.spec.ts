@@ -113,6 +113,7 @@ describe('IndexSaleService', () => {
       email: 'john@lenon.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     await createSaleService.execute({
       id: item.id,

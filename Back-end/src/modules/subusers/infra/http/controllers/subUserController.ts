@@ -4,6 +4,8 @@ import DeleteSubUserService from '@modules/subusers/services/DeleteSubUserServic
 import IndexSubUserService from '@modules/subusers/services/IndexSubUserService'
 import UpdateSubUserService from '@modules/subusers/services/UpdateSubUserService'
 import SubUserView from '@modules/subusers/views/SubUserView'
+import SendRedefinitionPasswordEmail from '@modules/subusers/services/SendRedefinitionPasswordEmail'
+import RedefinitionPasswordService from '@modules/subusers/services/RedefinitionPasswordService'
 import { Response, Request } from 'express'
 import { container } from 'tsyringe'
 
@@ -53,6 +55,41 @@ export default class SubUserController {
     })
 
     return response.status(200).json(SubUserView.renderMany(subUsers))
+  }
+
+  public async SendRedefinePasswordEmail(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { email } = request.body
+    const id = request.user.id
+
+    const sendRedefinitionPasswordEmail = container.resolve(
+      SendRedefinitionPasswordEmail,
+    )
+    await sendRedefinitionPasswordEmail.execute(email, id)
+
+    return response.status(200).json({ message: 'email has been sended' })
+  }
+
+  public async RedefinePassword(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { password, passwordAgain, validationKey } = request.body
+    const id = request.user.id
+
+    const redefinitionPasswordService = container.resolve(
+      RedefinitionPasswordService,
+    )
+    const subUser = await redefinitionPasswordService.execute({
+      password,
+      passwordAgain,
+      validationKey,
+      user_id: id,
+    })
+
+    return response.status(200).json({ user: SubUserView.render(subUser) })
   }
 
   public async update(request: Request, response: Response): Promise<Response> {

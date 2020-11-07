@@ -11,6 +11,7 @@ describe('CreateUserService', () => {
       name: 'johnlenon',
       email: 'email@example.com',
       password: '1234567',
+      is_Adm: false,
       user_id: v4(),
     })
     expect(subUser).toHaveProperty('id')
@@ -25,6 +26,7 @@ describe('CreateUserService', () => {
         email: 'email@example.com',
         password: '1234567',
         user_id: '321321321',
+        is_Adm: false,
       })
     } catch (error) {
       expect(error).toBeInstanceOf(AppError)
@@ -38,6 +40,7 @@ describe('CreateUserService', () => {
       name: 'johnlenon',
       email: 'email@example.com',
       password: '1234567',
+      is_Adm: false,
       user_id: v4(),
     })
 
@@ -46,6 +49,7 @@ describe('CreateUserService', () => {
         name: 'johnlenon',
         email: 'email@example.com',
         password: '1234567',
+        is_Adm: false,
         user_id: v4(),
       })
     } catch (error) {
@@ -60,6 +64,7 @@ describe('CreateUserService', () => {
       name: 'johnlenon',
       email: 'email@example.com',
       password: '1234567',
+      is_Adm: false,
       user_id: v4(),
     })
 
@@ -69,6 +74,7 @@ describe('CreateUserService', () => {
         email: 'email2@example.com',
         password: '1234567',
         user_id: v4(),
+        is_Adm: false,
       })
     } catch (error) {
       expect(error).toBeInstanceOf(AppError)

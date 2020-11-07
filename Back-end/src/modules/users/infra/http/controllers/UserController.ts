@@ -5,10 +5,12 @@ import CreateUserService from '@modules/users/services/CreateUserService'
 import DeleteUserService from '@modules/users/services/DeleteUserService'
 import IndexUserService from '@modules/users/services/IndexUserService'
 import SendConfirmationEmailService from '@modules/users/services/SendConfirmationEmailService'
+import SendRedefinitionPasswordEmail from '@modules/users/services/SendRedefinitionPasswordEmail'
 import ShowUserService from '@modules/users/services/ShowUserService'
 import UpdateUserService from '@modules/users/services/UpdateUserService'
 import UserView from '@modules/users/views/UserView'
 import SubUserView from '@modules/subusers/views/SubUserView'
+import RedefinitionPasswordService from '@modules/users/services/RedefinitionPasswordService'
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 
@@ -84,6 +86,38 @@ export default class UserController {
     return response.status(200).json({
       subUser: SubUserView.render(subUser),
     })
+  }
+
+  public async SendRedefinePasswordEmail(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { email } = request.body
+
+    const sendRedefinitionPasswordEmail = container.resolve(
+      SendRedefinitionPasswordEmail,
+    )
+    await sendRedefinitionPasswordEmail.execute(email)
+
+    return response.status(200).json({ message: 'email has been sended' })
+  }
+
+  public async RedefinePassword(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { password, passwordAgain, validationKey } = request.body
+
+    const redefinitionPasswordService = container.resolve(
+      RedefinitionPasswordService,
+    )
+    const user = await redefinitionPasswordService.execute({
+      password,
+      passwordAgain,
+      validationKey,
+    })
+
+    return response.status(200).json({ user: UserView.render(user) })
   }
 
   public async Delete(request: Request, response: Response): Promise<Response> {

@@ -13,6 +13,13 @@ subUserRouter.post('/signup', subUserController.signup)
 
 subUserRouter.post('/login', subUserController.login)
 
+subUserRouter.post(
+  '/redefine-password-email',
+  subUserController.SendRedefinePasswordEmail,
+)
+
+subUserRouter.patch('/redefine-password', subUserController.RedefinePassword)
+
 subUserRouter.put('/update/:id', subUserController.update)
 
 subUserRouter.delete('/delete/:id', subUserController.delete)
