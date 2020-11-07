@@ -83,15 +83,9 @@ export default class IndexSaleService {
     }
 
     if (subUser_Name) {
-      const subUser = await this.subUserRepository.findByName(
-        user_id,
-        subUser_Name,
+      this.sales = this.sales.filter(
+        sale => sale.sub_User.name === subUser_Name,
       )
-      if (!subUser) {
-        throw new AppError(`${subUser_Name} does not exist`)
-      }
-
-      this.sales = this.sales.filter(sale => sale.subUser_id === subUser.id)
     }
     return this.sales
   }

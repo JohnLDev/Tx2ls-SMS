@@ -11,7 +11,7 @@ interface IResponse {
   subUser_id: string
   created_at: string
   updated_at: string
-  sub_User: {
+  sub_User?: {
     name: string
   }
 }
@@ -27,7 +27,7 @@ export default {
       subUser_id: Sale.subUser_id,
       created_at: FormatDate(Sale.created_at),
       updated_at: FormatDate(Sale.updated_at),
-      sub_User: { name: Sale.sub_User.name },
+      sub_User: { name: Sale?.sub_User.name },
     }
   },
   renderMany(Sales: Sale[]): IResponse[] {

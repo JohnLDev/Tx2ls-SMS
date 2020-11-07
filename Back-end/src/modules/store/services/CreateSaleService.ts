@@ -76,18 +76,26 @@ class CreateSaleService {
       throw new AppError('do not have enough products in storage')
     }
 
-    const sale = (await this.saleRepository.create({
+    const sale = await this.saleRepository.create({
       name: this.item.name,
       brand: this.item.brand,
       price: this.item.price * amount,
       amount,
       subUser_id,
       user_id,
-    })) as Sale
+    })
+    const saleFinished = await this.saleRepository.findById(
+      sale.id,
+      sale.user_id,
+    )
+    if (!saleFinished) {
+      return sale
+    }
+
     this.item.amount = this.item.amount - sale.amount
 
     await this.storageRepository.update(this.item)
-    return sale
+    return saleFinished
   }
 }
 

@@ -28,20 +28,27 @@ interface Sale {
 }
 
 const History: React.FC = () => {
-  const [income, setIncome] = useState('')
+  const [income, setIncome] = useState(0)
   const [subUserName, setSubUserName] = useState('')
   const [dateFrom, setDateFrom] = useState('')
   const [dateUntil, setDateUntil] = useState('')
   const [sales, setSales] = useState<Sale[]>([])
-  let salesIncome: number
+
   useEffect(() => {
     api.get(`/sale/index`).then(response => {
       setSales(response.data)
     })
-  }, [dateFrom, dateUntil, subUserName])
-  sales.forEach(sale => {
-    salesIncome = salesIncome + sale.price
-  })
+  }, [])
+
+  const sale = sales.map(sale => sale.price)
+  let SumSale: number
+  if (sale.length > 0) {
+    SumSale = sale.reduce((sum, item) => {
+      return (sum =
+        parseFloat((sum as unknown) as string) +
+        parseFloat((item as unknown) as string))
+    })
+  }
 
   async function HandleRevertSale(id: number): Promise<void> {}
   return (
@@ -113,6 +120,7 @@ const History: React.FC = () => {
                     <td className='span' />
                     <td className='span' />
                     <td>
+                      {SumSale}
                       {'  '}
                       Reais
                     </td>
