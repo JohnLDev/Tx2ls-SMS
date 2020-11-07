@@ -33,6 +33,7 @@ export class CreateSales1602464682118 implements MigrationInterface {
           {
             name: 'subUser_id',
             type: 'uuid',
+            isNullable: true,
           },
           {
             name: 'amount',

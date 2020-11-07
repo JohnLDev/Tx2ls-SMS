@@ -14,6 +14,7 @@ import Header from '../../components/Header/Header'
 import DateMask from '../../utils/DateMask'
 import api from '../../services/apiClient'
 import { FiCornerDownLeft } from 'react-icons/fi'
+import { toast } from 'react-toastify'
 
 interface Sale {
   id: number
@@ -28,7 +29,6 @@ interface Sale {
 }
 
 const History: React.FC = () => {
-  const [income, setIncome] = useState(0)
   const [subUserName, setSubUserName] = useState('')
   const [dateFrom, setDateFrom] = useState('')
   const [dateUntil, setDateUntil] = useState('')
@@ -40,17 +40,49 @@ const History: React.FC = () => {
     })
   }, [])
 
-  const sale = sales.map(sale => sale.price)
-  let SumSale: number
-  if (sale.length > 0) {
-    SumSale = sale.reduce((sum, item) => {
+  function GetIncome(): number {
+    const sale = sales.map(sale => sale.price)
+    const SumSale = sale.reduce((sum, item) => {
       return (sum =
         parseFloat((sum as unknown) as string) +
         parseFloat((item as unknown) as string))
     })
-  }
 
-  async function HandleRevertSale(id: number): Promise<void> {}
+    return SumSale
+  }
+  async function HandleFilterSales(): Promise<void> {
+    try {
+      const filteredSales = await api.get(
+        `/sale/index?fromDate=${dateFrom}&untilDate=${dateUntil}&subUserName=${subUserName}`,
+      )
+      setSales(filteredSales.data)
+      toast.success('Vendas Filtradas com sucesso')
+    } catch (error) {
+      const {
+        data: { message },
+      } = error.response
+      toast.error(message)
+    }
+  }
+  async function HandleRevertSale(id: number): Promise<void> {
+    const areYouSure = window.confirm(
+      'Tem certeza que deseja reverter a venda?',
+    )
+    if (!areYouSure) {
+      return
+    }
+    try {
+      await api.delete(`/sale/revert/${id}`)
+      const filteredSales = sales.filter(sale => sale.id !== id)
+      setSales(filteredSales)
+      toast.success('Venda Revertida com sucesso')
+    } catch (error) {
+      const {
+        data: { message },
+      } = error.response
+      toast.error(message)
+    }
+  }
   return (
     <Border>
       <Page>
@@ -92,7 +124,7 @@ const History: React.FC = () => {
                   }}
                 ></Input>
               </div>
-              <SellButton>
+              <SellButton onClick={HandleFilterSales}>
                 P{'  '}R{'  '}O{'  '}C{'  '}U{'  '}R{'  '}A{'  '}R
               </SellButton>
             </div>
@@ -120,7 +152,7 @@ const History: React.FC = () => {
                     <td className='span' />
                     <td className='span' />
                     <td>
-                      {SumSale}
+                      {sales.length > 1 && GetIncome()}
                       {'  '}
                       Reais
                     </td>

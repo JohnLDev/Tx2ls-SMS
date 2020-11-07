@@ -38,12 +38,8 @@ export default class IndexSaleService {
 
     const schema = yup.object().shape({
       user_id: yup.string().required(),
-      fromDate: yup
-        .string()
-        .length(10, 'please use this format to date: xx/xx/xxxx'),
-      untilDate: yup
-        .string()
-        .length(10, 'please use this format to date: xx/xx/xxxx'),
+      fromDate: yup.string().max(10),
+      untilDate: yup.string().max(10),
       subUser_Name: yup.string(),
     })
     await schema.validate(data)

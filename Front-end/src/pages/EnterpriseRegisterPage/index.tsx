@@ -82,6 +82,7 @@ const EnterpriseRegisterPage: React.FC = () => {
         data: { message },
       } = error.response
       toast.error(message)
+      return
     }
     toast.success('Registrado com suceso!')
     toast.warn('Você precisa verificar seu email!')

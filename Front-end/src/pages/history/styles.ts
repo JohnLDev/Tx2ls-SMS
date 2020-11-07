@@ -34,7 +34,7 @@ export const HistoryContainer = styled.div`
 `
 export const HisyoryDiv = styled.div`
   width: 100%;
-  height: 100%;
+  height: 65%;
   display: flex;
   flex-direction: column;
 
@@ -70,6 +70,7 @@ export const HisyoryDiv = styled.div`
     }
     .table {
       max-width: 100%;
+      max-height: 100%;
       margin: 10px;
       border: 1px solid #d3d3d3;
       button {
@@ -99,7 +100,7 @@ export const FindHistory = styled.div`
   flex-direction: column;
   align-items: center;
   height: 30%;
-
+  max-height: 30%;
   margin-left: 10px;
   margin-right: 10px;
 

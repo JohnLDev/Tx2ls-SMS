@@ -44,6 +44,12 @@ const Inventory: React.FC = () => {
   const [inventory, setInventory] = useState<Item[]>([])
 
   async function HandleDeleteItem(id: number): Promise<void> {
+    const areYouSure = window.confirm(
+      'Tem certeza que deseja deletar esse item?',
+    )
+    if (!areYouSure) {
+      return
+    }
     try {
       await api.delete(`/storage/delete/${id}`)
       toast.success('Item Deletado!')

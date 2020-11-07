@@ -30,7 +30,7 @@ class SendRedefinitionPasswordEmail {
       subject: user.email,
       expiresIn: expiresIn,
     })
-
+    const link = 'redefine-password-enterprise'
     const filePath = path.join(
       __dirname,
       '../../../shared/templates/EmailRedefinitionPassword.html',
@@ -39,6 +39,7 @@ class SendRedefinitionPasswordEmail {
     const template = handlebars.compile(source)
     const replacements = {
       token,
+      link,
     }
     const htmlToSend = template(replacements)
 

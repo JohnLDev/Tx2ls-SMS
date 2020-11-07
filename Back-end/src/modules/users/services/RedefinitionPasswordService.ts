@@ -36,6 +36,7 @@ class RedefinitionPasswordService {
       passwordAgain,
       validationKey,
     }
+    console.log(data)
     const schema = yup.object().shape({
       password: yup.string().min(6).required(),
       passwordAgain: yup.string().min(6).required(),
@@ -51,6 +52,7 @@ class RedefinitionPasswordService {
       const decoded = verify(validationKey, authConfig.jwt.secret as string)
 
       const { sub } = decoded as ITokenPayload
+      console.log(sub)
       const email = yup.string().email().required()
       await email.validate(sub)
 

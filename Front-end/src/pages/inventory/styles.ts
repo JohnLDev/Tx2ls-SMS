@@ -67,12 +67,15 @@ export const Storage = styled.div`
     background: #f8f8ff;
     height: 65%;
     max-height: 65%;
+    max-width: 100%;
     width: 90%;
+    flex-grow: 1;
 
     border: 1px solid #d3d3d3;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 
     overflow: auto;
     &::-webkit-scrollbar {
@@ -91,8 +94,13 @@ export const Storage = styled.div`
         background: 0;
         height: 100%;
       }
+      tr {
+        width: 25%;
+        max-width: 25%;
+      }
       td {
         width: 25%;
+        max-width: 25%;
         text-align: center;
         border: 1px solid #d3d3d3;
       }
