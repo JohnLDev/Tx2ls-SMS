@@ -11,6 +11,7 @@ import { FiArrowLeft, FiPlus, FiX } from 'react-icons/fi'
 import { useHistory } from 'react-router-dom'
 import { Form } from '@unform/web'
 import { toast } from 'react-toastify'
+import handleTelefone from '../../utils/NumberMask'
 
 const EnterpriseRegisterPage: React.FC = () => {
   const [nome, setNome] = useState('')
@@ -197,7 +198,9 @@ const EnterpriseRegisterPage: React.FC = () => {
                 type='number'
                 name='whatsapp'
                 value={whatsapp}
-                onChange={({ target: { value } }) => setWhatsapp(value)}
+                onChange={({ target: { value } }) =>
+                  setWhatsapp(handleTelefone(value))
+                }
                 style={{ border: whatsapp ? '2px solid #A1E9C5' : '0' }}
               />
             </div>
