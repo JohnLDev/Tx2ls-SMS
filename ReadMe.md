@@ -7,13 +7,13 @@
 
 
 
-<p align="center">
+<!-- <p align="center">
  <a href="#-sobre">Sobre</a> •
  <a href="#-layout">Layout</a> • 
  <a href="#-executando-o-Tx2l's-SMS">Como executar</a> • 
  <a href="#-tecnologias">Tecnologias</a> • 
- <a href="#-autora">Autor</a> 
-</p>
+ <a href="#-autor">Autor</a> 
+</p> -->
 
 ---
 
