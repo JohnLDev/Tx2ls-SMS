@@ -25,12 +25,14 @@ const EnterpriseRegisterPage: React.FC = () => {
   const filevalue = ''
   const { goBack, push } = useHistory()
   async function HandleSubmit(): Promise<void> {
+    const unformatedWhats= whatsapp.replace('-','').replace('(','').replace(')','').replace(' ','').replace(' ','')
+    setEmail(email.toLowerCase())
     const testData = {
       nome,
       email,
       password,
       enterprise,
-      whatsapp,
+      whatsapp: unformatedWhats,
       images,
     }
     const schema = yup.object().shape({
@@ -66,7 +68,7 @@ const EnterpriseRegisterPage: React.FC = () => {
     data.append('email', email)
     data.append('password', password)
     data.append('enterprise_Name', enterprise)
-    data.append('whatsapp', whatsapp)
+    data.append('whatsapp', unformatedWhats)
     images.forEach(image => {
       data.append('images', image)
     })
@@ -195,9 +197,10 @@ const EnterpriseRegisterPage: React.FC = () => {
                 <Label htmlFor='whatsapp'>Whatsapp:</Label>
               </div>
               <Input
-                type='number'
+                type='text'
                 name='whatsapp'
                 value={whatsapp}
+                maxLength={16}
                 onChange={({ target: { value } }) =>
                   setWhatsapp(handleTelefone(value))
                 }

@@ -16,11 +16,12 @@ const CreateNewUserPage: React.FC = () => {
   const { goBack } = useHistory()
 
   async function HandleSubmit(): Promise<void> {
+    setEmail(email.toLowerCase())
     const data = { name, email, password }
     const schema = yup.object().shape({
       name: yup.string().required('Por Favor Informe um nome!!'),
       email: yup.string().required('Informe um Email!!'),
-      password: yup.string().required('Informe Uma Senha!!'),
+      password: yup.string().min(6,'Senha deve ter no minimo 6 caracteres').required('Informe Uma Senha!!'),
     })
     try {
       await schema.validate(data, {

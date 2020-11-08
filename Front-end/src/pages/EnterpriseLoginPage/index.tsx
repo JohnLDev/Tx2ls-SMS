@@ -24,6 +24,7 @@ const EnterpriseLoginPage: React.FC = () => {
   const [password, setPassword] = useState('')
 
   async function HandleLogin(): Promise<void> {
+    setEmail(email.toLowerCase())
     const data = {
       email,
       password,

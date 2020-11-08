@@ -33,6 +33,7 @@ const LoginPage: React.FC = () => {
   const [checkbox, setCheckbox] = useState(false)
 
   async function HandleLogin(): Promise<void> {
+    setEmail(email.toLowerCase())
     const data = { email, password }
     const schema = yup.object().shape({
       email: yup

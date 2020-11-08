@@ -37,9 +37,9 @@ export default class CreateSubUserService {
     }
 
     const schema = yup.object().shape({
-      name: yup.string().required(),
-      email: yup.string().email().required(),
-      password: yup.string().min(6).required(),
+      name: yup.string().required('Insert a Name'),
+      email: yup.string().email().required('Insert a Email'),
+      password: yup.string().min(6).required('Insert a password'),
       user_id: yup.string().required(),
       isAdm: yup.boolean(),
     })

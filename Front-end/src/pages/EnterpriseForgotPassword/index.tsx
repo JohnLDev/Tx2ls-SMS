@@ -12,6 +12,7 @@ const EnterpriseForgotPasswordPage: React.FC = () => {
   const [email, setEmail] = useState('')
   const { push } = useHistory()
   async function handleSendEmail(): Promise<void> {
+    setEmail(email.toLowerCase())
     const isEmail = yup.string().email().required()
     try {
       await isEmail.validate(email)

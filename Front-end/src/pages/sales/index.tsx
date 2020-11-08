@@ -206,7 +206,7 @@ const Sales: React.FC = () => {
                 </label>
                 <InputMenor
                   name='amount'
-                  disabled={!switchState.checkedA}
+                  disabled={!switchState.checkedB}
                   value={amountList}
                   onChange={({ target: { value } }) => {
                     setAmountList(value)
