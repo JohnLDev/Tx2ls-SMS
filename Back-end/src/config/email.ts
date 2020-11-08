@@ -3,7 +3,7 @@ import { config } from 'dotenv'
 
 config()
 const Mailer = Nodemailer.createTransport({
-  host: 'smtp.sendgrid.net',
+  host: process.env.SMTP_HOST,
   port: 587,
   auth: {
     user: 'apikey',
