@@ -121,7 +121,7 @@ $ git clone https://github.com/johnldev/Tx2ls-SMS
 $ cd Tx2ls-SMS
 
 ```
-### 💻 Rodando o Happy web
+### 💻 Rodando o Tx2l's SMS
 
 Entre na pasta
 
