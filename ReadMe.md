@@ -23,6 +23,8 @@ Essa aplicação permite que, seja cadastrada uma empresa essa essa empresa poss
 
 Este projeto foi desenvolvido como um trabalho freelancer e postado com as devidas permissões.
 
+AVISO: Projeto realizado sem designer e a pedido do cliente foi deixado de lado a responsivade visando o tempo de entrega!
+
 ---
 
 ## 🎨 Layout
