@@ -26,7 +26,9 @@ app.use('/files', express.static(UploadConfig.directory))
 app.use(routes)
 app.use(
   '/uploads/images',
-  express.static(path.join(__dirname, '..', '..', '..', 'upload', 'images')),
+  express.static(
+    path.join(__dirname, '..', '..', '..', '..', 'upload', 'images'),
+  ),
 )
 app.use(
   (error: Error, request: Request, response: Response, _next: NextFunction) => {

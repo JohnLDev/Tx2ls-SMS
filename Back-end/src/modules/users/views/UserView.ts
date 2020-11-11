@@ -13,6 +13,7 @@ interface IResponse {
   email: string
   enterprise_Name: string
   whatsapp: number
+  verify_Key: string
   images: IResponseImage[]
   created_at: string
   updated_at: string
@@ -25,6 +26,7 @@ export default {
       email: user.email,
       enterprise_Name: user.enterprise_Name,
       whatsapp: user.whatsapp,
+      verify_Key: user.verify_Key,
       images: ImageView.renderMany(user.images),
       created_at: FormatDate(user.created_at),
       updated_at: FormatDate(user.updated_at),

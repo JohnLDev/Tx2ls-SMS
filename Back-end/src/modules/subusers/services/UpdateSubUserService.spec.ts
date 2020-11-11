@@ -14,6 +14,7 @@ describe('UpdateSubUserService', () => {
       email: 'email@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     const updatedSubUser = await updateSubUserService.execute({
       name: 'novo nome',
@@ -35,12 +36,14 @@ describe('UpdateSubUserService', () => {
       email: 'email@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     await createSubUserService.execute({
       name: 'john2lenon',
       email: 'email2@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     try {
       await updateSubUserService.execute({
@@ -62,12 +65,14 @@ describe('UpdateSubUserService', () => {
       email: 'email@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     await createSubUserService.execute({
       name: 'john2lenon',
       email: 'email2@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     try {
       await updateSubUserService.execute({

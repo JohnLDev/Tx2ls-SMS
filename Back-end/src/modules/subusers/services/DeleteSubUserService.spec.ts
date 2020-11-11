@@ -14,6 +14,7 @@ describe('DeleteSubUserService', () => {
       email: 'email@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     const deleted = await deleteSubUserService.execute({
       user_id: v4(),
@@ -30,6 +31,7 @@ describe('DeleteSubUserService', () => {
       email: 'email@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     try {
       await deleteSubUserService.execute({

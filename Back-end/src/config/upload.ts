@@ -1,7 +1,7 @@
 import multer from 'multer'
 import path from 'path'
 
-const tmpFolder = path.resolve(__dirname, '..', 'upload', 'images')
+const tmpFolder = path.resolve(__dirname, '..', '..', 'upload', 'images')
 export default {
   directory: tmpFolder,
   storage: multer.diskStorage({

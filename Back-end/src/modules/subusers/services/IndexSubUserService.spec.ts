@@ -15,6 +15,7 @@ describe('IndexSubUserService', () => {
       email: 'email@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     const subUsers = (await indexSubUserService.execute({
       user_id: v4(),
@@ -32,6 +33,7 @@ describe('IndexSubUserService', () => {
       email: 'email@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     const subUser = await indexSubUserService.execute({
       user_id: v4(),

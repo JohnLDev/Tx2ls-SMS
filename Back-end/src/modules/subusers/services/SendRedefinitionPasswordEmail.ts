@@ -33,7 +33,7 @@ class SendRedefinitionPasswordEmail {
     const link = 'redefine-password'
     const filePath = path.join(
       __dirname,
-      '../../../shared/templates/EmailRedefinitionPassword.html',
+      '../../../../templates/EmailRedefinitionPassword.html',
     )
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)

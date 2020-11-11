@@ -9,7 +9,7 @@ interface IImage {
 function deleteImage(images: IImage[]): void {
   images.forEach(image => {
     fs.unlink(
-      path.resolve(__dirname, '..', '..', 'upload', 'images', image.path),
+      path.resolve(__dirname, '..', '..', '..', 'upload', 'images', image.path),
       err => {
         if (err) {
           console.log(err)
@@ -22,9 +22,10 @@ function deleteImage(images: IImage[]): void {
 function renameImage(enterprise_Name: string, images: IImage[]): IImage[] {
   images.forEach(image => {
     fs.rename(
-      path.resolve(__dirname, '..', '..', 'upload', 'images', image.path),
+      path.resolve(__dirname, '..', '..', '..', 'upload', 'images', image.path),
       path.resolve(
         __dirname,
+        '..',
         '..',
         '..',
         'upload',

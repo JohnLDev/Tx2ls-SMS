@@ -17,6 +17,7 @@ describe('AuthenticateSubUserService', () => {
       email: 'email@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
     const { token } = await authenticateSubUserService.execute({
       email: subUser.email,
@@ -69,6 +70,7 @@ describe('AuthenticateSubUserService', () => {
       email: 'email@example.com',
       password: '1234567',
       user_id: v4(),
+      is_Adm: false,
     })
 
     try {

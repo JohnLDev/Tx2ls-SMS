@@ -29,7 +29,7 @@ class SendConfirmationEmailService {
 
     const filePath = path.join(
       __dirname,
-      '../../../shared/templates/EmailVerification.html',
+      '../../../../templates/EmailVerification.html',
     )
     const source = fs.readFileSync(filePath, 'utf-8').toString()
     const template = handlebars.compile(source)
